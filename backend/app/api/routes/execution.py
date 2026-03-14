@@ -87,7 +87,6 @@ async def execute_questions(
             project=project,
             llm_manager=request.app.state.llm_manager,
             vector_store=request.app.state.vector_store,
-            db=db,
             force_rerun=body.force_rerun,
         )
     )
@@ -99,16 +98,20 @@ async def _execute_stream(
     project: dict[str, Any],
     llm_manager,
     vector_store,
-    db: asyncpg.Connection,
     force_rerun: bool,
 ):
     """SSE generator that executes questions one by one."""
     from app.services.rag.retriever import HybridRetriever
     from app.services.rag.reasoning import MultiHopReasoner
     from app.services.rag.prompts import build_qa_prompt
+    from app.db.postgres import get_pool
 
-    retriever = HybridRetriever(db=db, vector_store=vector_store)
-    reasoner = MultiHopReasoner(retriever=retriever, llm=llm_manager)
+    # Acquire our own connection — the request's connection is released before streaming starts
+    pool = await get_pool()
+    db = await pool.acquire()
+    try:
+        retriever = HybridRetriever(db=db, vector_store=vector_store)
+        reasoner = MultiHopReasoner(retriever=retriever, llm=llm_manager)
 
     total = len(questions)
     language = project.get("language", "de")
@@ -345,6 +348,8 @@ async def _execute_stream(
         "event": "done",
         "data": json.dumps({"status": "completed"}),
     }
+    finally:
+        await pool.release(db)
 
 
 def _load_page_images_for_chunks(sources_data) -> dict[int, str]:
