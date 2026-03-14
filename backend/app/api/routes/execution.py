@@ -113,241 +113,215 @@ async def _execute_stream(
         retriever = HybridRetriever(db=db, vector_store=vector_store)
         reasoner = MultiHopReasoner(retriever=retriever, llm=llm_manager)
 
-    total = len(questions)
-    language = project.get("language", "de")
+        total = len(questions)
+        language = project.get("language", "de")
 
-    # Mark project as processing
-    await db.execute(
-        """UPDATE projects SET status = 'processing',
-              updated_at = now()
-           WHERE id = $1""",
-        project_id,
-    )
+        # Mark project as processing
+        await db.execute(
+            """UPDATE projects SET status = 'processing',
+                  updated_at = now()
+               WHERE id = $1""",
+            project_id,
+        )
 
-    yield {
-        "event": "start",
-        "data": json.dumps({"total_questions": total}),
-    }
+        yield {
+            "event": "start",
+            "data": json.dumps({"total_questions": total}),
+        }
 
-    for idx, question in enumerate(questions):
-        q_id = question["id"]
-        progress = (idx + 1) / total
+        for idx, question in enumerate(questions):
+            q_id = question["id"]
+            progress = (idx + 1) / total
 
-        # Check if already answered (skip unless force_rerun)
-        if not force_rerun:
-            existing = await db.fetchrow(
-                "SELECT id FROM answers WHERE project_id = $1 AND question_id = $2",
-                project_id, q_id,
-            )
-            if existing:
+            # Check if already answered (skip unless force_rerun)
+            if not force_rerun:
+                existing = await db.fetchrow(
+                    "SELECT id FROM answers WHERE project_id = $1 AND question_id = $2",
+                    project_id, q_id,
+                )
+                if existing:
+                    yield {
+                        "event": "progress",
+                        "data": json.dumps({
+                            "question_id": q_id,
+                            "status": "skipped",
+                            "progress": progress,
+                            "message": "Already answered",
+                        }),
+                    }
+                    continue
+
+            yield {
+                "event": "progress",
+                "data": json.dumps({
+                    "question_id": q_id,
+                    "status": "running",
+                    "progress": progress,
+                    "message": f"Processing question {idx + 1}/{total}",
+                }),
+            }
+
+            try:
+                q_text = question["question_de"] if language == "de" else question["question_en"]
+                multi_hop = bool(question.get("multi_hop_required", False))
+                include_tables = bool(question.get("requires_table_qa", False))
+
+                if multi_hop:
+                    # Multi-hop reasoning
+                    result = await reasoner.reason(
+                        project_id=project_id,
+                        question=q_text,
+                        include_tables=include_tables,
+                    )
+                    answer_text = result.final_answer
+                    hop_count = result.hop_count
+                    prompt_tokens = result.prompt_tokens
+                    completion_tokens = result.completion_tokens
+                    sources_data = []
+                    for ia in result.intermediate_answers:
+                        for chunk in ia.retrieval.chunks:
+                            sources_data.append(chunk)
+                else:
+                    # Single-hop retrieval + generation
+                    retrieval = await retriever.retrieve(
+                        project_id=project_id,
+                        query=q_text,
+                        include_tables=include_tables,
+                    )
+                    sources_data = retrieval.chunks
+
+                    if not sources_data:
+                        no_data_msg = (
+                            "Keine Daten vorhanden."
+                            if language == "de"
+                            else "No data available."
+                        )
+                        answer_text = no_data_msg
+                        hop_count = 1
+                        prompt_tokens = 0
+                        completion_tokens = 0
+                    else:
+                        context = "\n\n".join(
+                            f"[{c.filename}, S.{c.page_number}] {c.text}"
+                            for c in sources_data
+                        )
+
+                        page_images = _load_page_images_for_chunks(sources_data)
+                        relevant_pages = sorted(
+                            {c.page_number for c in sources_data if c.page_number}
+                        )
+
+                        if page_images and relevant_pages:
+                            from app.services.rag.prompts import (
+                                get_system_prompt,
+                                FORMAT_INSTRUCTIONS_DE,
+                                FORMAT_INSTRUCTIONS_EN,
+                                QA_PROMPT_TEMPLATE_DE,
+                                QA_PROMPT_TEMPLATE_EN,
+                            )
+                            fmt_map = FORMAT_INSTRUCTIONS_DE if language == "de" else FORMAT_INSTRUCTIONS_EN
+                            template = QA_PROMPT_TEMPLATE_DE if language == "de" else QA_PROMPT_TEMPLATE_EN
+                            format_instruction = fmt_map.get(question["expected_format"], "")
+                            additional = question.get("llm_instruction") or ""
+                            user_text = template.format(
+                                context=context, question=q_text,
+                                format_instruction=format_instruction,
+                                additional_instruction=additional,
+                            )
+                            vision_content = build_vision_content(user_text, page_images, relevant_pages)
+                            system_prompt = get_system_prompt(language, vision=True)
+                            messages = [
+                                {"role": "system", "content": system_prompt},
+                                {"role": "user", "content": vision_content},
+                            ]
+                        else:
+                            messages = build_qa_prompt(
+                                question=q_text, context=context,
+                                expected_format=question["expected_format"],
+                                llm_instruction=question.get("llm_instruction"),
+                                language=language,
+                            )
+
+                        gen_result = await llm_manager.generate(messages)
+                        answer_text = gen_result["text"]
+                        hop_count = 1
+                        prompt_tokens = gen_result.get("prompt_tokens", 0)
+                        completion_tokens = gen_result.get("completion_tokens", 0)
+
+                # Compute confidence
+                confidence_score = _compute_confidence(sources_data)
+                confidence_tier = _tier_from_score(confidence_score)
+
+                raw_output = answer_text
+                answer_text = _clean_llm_output(answer_text)
+
+                answer_id = str(uuid.uuid4())
+                await db.execute(
+                    """INSERT INTO answers
+                       (id, project_id, question_id, answer_text,
+                        confidence_tier, confidence_score, hop_count,
+                        model_used, prompt_tokens, completion_tokens,
+                        raw_llm_output, status)
+                       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, 'generated')""",
+                    answer_id, project_id, q_id, answer_text,
+                    confidence_tier, confidence_score, hop_count,
+                    llm_manager.model_name or "unknown",
+                    prompt_tokens, completion_tokens,
+                    raw_output,
+                )
+
+                for rank, chunk in enumerate(sources_data[:8]):
+                    await db.execute(
+                        """INSERT INTO answer_sources
+                           (id, answer_id, chunk_id, relevance_score, rank_position)
+                           VALUES ($1, $2, $3, $4, $5)""",
+                        str(uuid.uuid4()), answer_id, chunk.chunk_id, chunk.score, rank,
+                    )
+
+                await db.execute(
+                    """UPDATE projects SET
+                          answered_count = (SELECT COUNT(*) FROM answers WHERE project_id = $1),
+                          updated_at = now()
+                       WHERE id = $1""",
+                    project_id,
+                )
+
                 yield {
                     "event": "progress",
                     "data": json.dumps({
                         "question_id": q_id,
-                        "status": "skipped",
+                        "status": "completed",
                         "progress": progress,
-                        "message": "Already answered",
+                        "confidence": confidence_tier,
                     }),
                 }
-                continue
+
+            except Exception as exc:
+                logger.error("Question %s execution failed: %s", q_id, exc)
+                yield {
+                    "event": "progress",
+                    "data": json.dumps({
+                        "question_id": q_id,
+                        "status": "error",
+                        "progress": progress,
+                        "message": str(exc),
+                    }),
+                }
+
+        # Update project counters and mark as completed
+        await db.execute(
+            """UPDATE projects SET
+                  status = 'completed',
+                  answered_count = (SELECT COUNT(*) FROM answers WHERE project_id = $1),
+                  updated_at = now()
+               WHERE id = $1""",
+            project_id,
+        )
 
         yield {
-            "event": "progress",
-            "data": json.dumps({
-                "question_id": q_id,
-                "status": "running",
-                "progress": progress,
-                "message": f"Processing question {idx + 1}/{total}",
-            }),
+            "event": "done",
+            "data": json.dumps({"status": "completed"}),
         }
-
-        try:
-            q_text = question["question_de"] if language == "de" else question["question_en"]
-            multi_hop = bool(question.get("multi_hop_required", False))
-            include_tables = bool(question.get("requires_table_qa", False))
-
-            if multi_hop:
-                # Multi-hop reasoning
-                result = await reasoner.reason(
-                    project_id=project_id,
-                    question=q_text,
-                    include_tables=include_tables,
-                )
-                answer_text = result.final_answer
-                hop_count = result.hop_count
-                prompt_tokens = result.prompt_tokens
-                completion_tokens = result.completion_tokens
-                sources_data = []
-                for ia in result.intermediate_answers:
-                    for chunk in ia.retrieval.chunks:
-                        sources_data.append(chunk)
-            else:
-                # Single-hop retrieval + generation
-                retrieval = await retriever.retrieve(
-                    project_id=project_id,
-                    query=q_text,
-                    include_tables=include_tables,
-                )
-                sources_data = retrieval.chunks
-
-                if not sources_data:
-                    # No relevant context found — skip LLM call
-                    no_data_msg = (
-                        "Keine Daten vorhanden."
-                        if language == "de"
-                        else "No data available."
-                    )
-                    answer_text = no_data_msg
-                    hop_count = 1
-                    prompt_tokens = 0
-                    completion_tokens = 0
-                else:
-                    context = "\n\n".join(
-                        f"[{c.filename}, S.{c.page_number}] {c.text}"
-                        for c in sources_data
-                    )
-
-                    # Check for available page images (vision pipeline)
-                    page_images = _load_page_images_for_chunks(sources_data)
-                    relevant_pages = sorted(
-                        {c.page_number for c in sources_data if c.page_number}
-                    )
-
-                    if page_images and relevant_pages:
-                        # Vision path: multimodal content with page images
-                        from app.services.rag.prompts import (
-                            get_system_prompt,
-                            FORMAT_INSTRUCTIONS_DE,
-                            FORMAT_INSTRUCTIONS_EN,
-                            QA_PROMPT_TEMPLATE_DE,
-                            QA_PROMPT_TEMPLATE_EN,
-                        )
-
-                        fmt_map = (
-                            FORMAT_INSTRUCTIONS_DE
-                            if language == "de"
-                            else FORMAT_INSTRUCTIONS_EN
-                        )
-                        template = (
-                            QA_PROMPT_TEMPLATE_DE
-                            if language == "de"
-                            else QA_PROMPT_TEMPLATE_EN
-                        )
-                        format_instruction = fmt_map.get(
-                            question["expected_format"], "",
-                        )
-                        additional = question.get("llm_instruction") or ""
-                        user_text = template.format(
-                            context=context,
-                            question=q_text,
-                            format_instruction=format_instruction,
-                            additional_instruction=additional,
-                        )
-
-                        vision_content = build_vision_content(
-                            user_text, page_images, relevant_pages,
-                        )
-                        system_prompt = get_system_prompt(
-                            language, vision=True,
-                        )
-                        messages = [
-                            {"role": "system", "content": system_prompt},
-                            {"role": "user", "content": vision_content},
-                        ]
-                    else:
-                        # Text-only path
-                        messages = build_qa_prompt(
-                            question=q_text,
-                            context=context,
-                            expected_format=question["expected_format"],
-                            llm_instruction=question.get("llm_instruction"),
-                            language=language,
-                        )
-
-                    gen_result = await llm_manager.generate(messages)
-                    answer_text = gen_result["text"]
-                    hop_count = 1
-                    prompt_tokens = gen_result.get("prompt_tokens", 0)
-                    completion_tokens = gen_result.get("completion_tokens", 0)
-
-            # Compute confidence
-            confidence_score = _compute_confidence(sources_data)
-            confidence_tier = _tier_from_score(confidence_score)
-
-            # Post-process: clean up LLM output
-            raw_output = answer_text
-            answer_text = _clean_llm_output(answer_text)
-
-            # Store answer
-            answer_id = str(uuid.uuid4())
-            await db.execute(
-                """INSERT INTO answers
-                   (id, project_id, question_id, answer_text,
-                    confidence_tier, confidence_score, hop_count,
-                    model_used, prompt_tokens, completion_tokens,
-                    raw_llm_output, status)
-                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, 'generated')""",
-                answer_id, project_id, q_id, answer_text,
-                confidence_tier, confidence_score, hop_count,
-                llm_manager.model_name or "unknown",
-                prompt_tokens, completion_tokens,
-                raw_output,
-            )
-
-            # Store sources
-            for rank, chunk in enumerate(sources_data[:8]):
-                await db.execute(
-                    """INSERT INTO answer_sources
-                       (id, answer_id, chunk_id, relevance_score, rank_position)
-                       VALUES ($1, $2, $3, $4, $5)""",
-                    str(uuid.uuid4()), answer_id, chunk.chunk_id, chunk.score, rank,
-                )
-
-            # Update project progress incrementally so overview reflects it
-            await db.execute(
-                """UPDATE projects SET
-                      answered_count = (SELECT COUNT(*) FROM answers WHERE project_id = $1),
-                      updated_at = now()
-                   WHERE id = $1""",
-                project_id,
-            )
-
-            yield {
-                "event": "progress",
-                "data": json.dumps({
-                    "question_id": q_id,
-                    "status": "completed",
-                    "progress": progress,
-                    "confidence": confidence_tier,
-                }),
-            }
-
-        except Exception as exc:
-            logger.error("Question %s execution failed: %s", q_id, exc)
-            yield {
-                "event": "progress",
-                "data": json.dumps({
-                    "question_id": q_id,
-                    "status": "error",
-                    "progress": progress,
-                    "message": str(exc),
-                }),
-            }
-
-    # Update project counters and mark as completed
-    await db.execute(
-        """UPDATE projects SET
-              status = 'completed',
-              answered_count = (SELECT COUNT(*) FROM answers WHERE project_id = $1),
-              updated_at = now()
-           WHERE id = $1""",
-        project_id,
-    )
-
-    yield {
-        "event": "done",
-        "data": json.dumps({"status": "completed"}),
-    }
     finally:
         await pool.release(db)
 
