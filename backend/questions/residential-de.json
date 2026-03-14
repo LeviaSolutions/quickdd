@@ -1,0 +1,929 @@
+[
+  {
+    "question_id": "RES-001",
+    "category": "residential_specific",
+    "subcategory": "Wohneinheiten",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Wie viele Wohneinheiten gibt es und wie ist die Größenstruktur?",
+    "question_en": "How many residential units exist and what is the size structure?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Wohneinheit",
+      "Wohnungsgrößen",
+      "Wohnungsmix",
+      "Zimmeranzahl"
+    ],
+    "search_keywords_en": [
+      "residential unit",
+      "unit size",
+      "apartment mix"
+    ],
+    "priority": "critical",
+    "source_hint": "Mieterliste, Wohnflächenberechnung",
+    "llm_instruction": "List all units: number, size (sqm), rooms, floor, current rent.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-002",
+    "category": "residential_specific",
+    "subcategory": "Wohnfläche",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Sind die Wohnflächen nach WoFlV korrekt berechnet?",
+    "question_en": "Are residential areas correctly calculated per WoFlV?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Wohnfläche",
+      "WoFlV",
+      "Wohnflächenverordnung",
+      "Wohnflächenberechnung"
+    ],
+    "search_keywords_en": [
+      "living area",
+      "WoFlV",
+      "residential area calculation"
+    ],
+    "priority": "critical",
+    "source_hint": "Wohnflächenberechnung",
+    "llm_instruction": "Verify Wohnfläche calculations per WoFlV. Flag discrepancies >10% (rent reduction risk).",
+    "validation_rule": "numeric_area_sqm",
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": "WoFlV",
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-003",
+    "category": "residential_specific",
+    "subcategory": "Mietpreisbremse",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Gilt die Mietpreisbremse und werden die Grenzen eingehalten?",
+    "question_en": "Does the Mietpreisbremse apply and are limits observed?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Mietpreisbremse",
+      "§556d BGB",
+      "Kappungsgrenze",
+      "qualifizierter Mietspiegel"
+    ],
+    "search_keywords_en": [
+      "rent control",
+      "Mietpreisbremse",
+      "rent cap"
+    ],
+    "priority": "critical",
+    "source_hint": "Mietspiegel, Mietverträge",
+    "llm_instruction": "Determine Mietpreisbremse applicability. Check all rents against the limit (110% of ortsübliche Vergleichsmiete). Flag non-compliance risk.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": "BGB §556d-g",
+    "requires_table_qa": false,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "RES-004",
+    "category": "residential_specific",
+    "subcategory": "Mietspiegel",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Wie verhalten sich die Mieten zum qualifizierten Mietspiegel?",
+    "question_en": "How do rents compare to the qualified Mietspiegel?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Mietspiegel",
+      "ortsübliche Vergleichsmiete",
+      "Mieterhöhungspotenzial"
+    ],
+    "search_keywords_en": [
+      "Mietspiegel",
+      "comparable rent",
+      "rent increase potential"
+    ],
+    "priority": "critical",
+    "source_hint": "Mietspiegel",
+    "llm_instruction": "Compare all unit rents with Mietspiegel values. Calculate rent increase potential.",
+    "validation_rule": "numeric_eur_sqm",
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": "BGB §558c",
+    "requires_table_qa": true,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "RES-005",
+    "category": "residential_specific",
+    "subcategory": "Mieterhöhung",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Welche Mieterhöhungsmöglichkeiten bestehen (Kappungsgrenze)?",
+    "question_en": "What rent increase options exist (cap limit)?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Mieterhöhung",
+      "Kappungsgrenze",
+      "§558 BGB",
+      "Modernisierungsumlage"
+    ],
+    "search_keywords_en": [
+      "rent increase",
+      "cap limit",
+      "modernization levy"
+    ],
+    "priority": "critical",
+    "source_hint": "Mietverträge, Mietspiegel",
+    "llm_instruction": "Analyze rent increase potential per §558 BGB: cap limits (15%/20% in 3 years), modernization surcharges (§559 BGB).",
+    "validation_rule": null,
+    "depends_on": [
+      "RES-004"
+    ],
+    "severity_weight": 9,
+    "regulatory_reference": "BGB §558, §559",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-006",
+    "category": "residential_specific",
+    "subcategory": "Mieterschutz",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Welchen Kündigungsschutz genießen die Mieter?",
+    "question_en": "What termination protection do tenants have?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Kündigungsschutz",
+      "Sozialklausel",
+      "Eigenbedarfskündigung",
+      "Sperrfrist"
+    ],
+    "search_keywords_en": [
+      "tenant protection",
+      "social clause",
+      "personal use",
+      "lock-out period"
+    ],
+    "priority": "high",
+    "source_hint": "Mietverträge",
+    "llm_instruction": "Assess tenant protection: statutory termination restrictions, Eigenbedarfskündigung limitations, Sperrfristen.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 8,
+    "regulatory_reference": "BGB §573 ff., §577a",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-007",
+    "category": "residential_specific",
+    "subcategory": "Umwandlung",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Bestehen Umwandlungsverbote oder -beschränkungen (Milieuschutz)?",
+    "question_en": "Are there conversion bans or restrictions (Milieuschutz)?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Umwandlungsverbot",
+      "Milieuschutz",
+      "Erhaltungssatzung",
+      "Umwandlung"
+    ],
+    "search_keywords_en": [
+      "conversion ban",
+      "Milieuschutz",
+      "conservation area",
+      "conversion"
+    ],
+    "priority": "critical",
+    "source_hint": "Erhaltungssatzung, Bezirksamt",
+    "llm_instruction": "Check for Umwandlungsverbote in Milieuschutzgebieten (Erhaltungssatzung per BauGB §172).",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": "BauGB §172, BGB §250",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-008",
+    "category": "residential_specific",
+    "subcategory": "Modernisierungsumlage",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Welche Modernisierungsumlagen wurden oder werden erhoben?",
+    "question_en": "What modernization surcharges have been or are being levied?",
+    "expected_format": "list",
+    "search_keywords_de": [
+      "Modernisierungsumlage",
+      "§559 BGB",
+      "Mieterhöhung nach Modernisierung"
+    ],
+    "search_keywords_en": [
+      "modernization surcharge",
+      "Section 559"
+    ],
+    "priority": "high",
+    "source_hint": "Mietverträge, Modernisierungsvereinbarungen",
+    "llm_instruction": "Track modernization surcharges: amounts, tenant acceptance, remaining duration.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": "BGB §559",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-009",
+    "category": "residential_specific",
+    "subcategory": "Zweckentfremdung",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Bestehen Risiken aus dem Zweckentfremdungsverbot?",
+    "question_en": "Are there risks from the misuse prohibition?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Zweckentfremdung",
+      "Zweckentfremdungsverbot",
+      "Ferienwohnung",
+      "Leerstand"
+    ],
+    "search_keywords_en": [
+      "misuse prohibition",
+      "short-term rental",
+      "Airbnb"
+    ],
+    "priority": "high",
+    "source_hint": "Zweckentfremdungsverbot",
+    "llm_instruction": "Check if any units are used as short-term rentals or left vacant in violation of Zweckentfremdungsverbot.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 8,
+    "regulatory_reference": "ZwVbG (Landesrecht)",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-010",
+    "category": "residential_specific",
+    "subcategory": "Betriebskostenabrechnung",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Sind die Betriebskostenabrechnungen formell korrekt und fristgerecht?",
+    "question_en": "Are service charge statements formally correct and timely?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Betriebskostenabrechnung",
+      "Abrechnungsfrist",
+      "formelle Fehler",
+      "BGB §556"
+    ],
+    "search_keywords_en": [
+      "service charge statement",
+      "settlement deadline",
+      "formal error"
+    ],
+    "priority": "high",
+    "source_hint": "NK-Abrechnungen",
+    "llm_instruction": "Review service charge statements for formal correctness and timeliness (12-month deadline per §556 Abs. 3 BGB).",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 8,
+    "regulatory_reference": "BGB §556 Abs. 3",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-011",
+    "category": "residential_specific",
+    "subcategory": "Hausverwaltung",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Wer ist der Wohnungsverwalter und wie ist die Servicequalität?",
+    "question_en": "Who is the residential property manager and what is the service quality?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Hausverwaltung",
+      "Wohnungsverwalter",
+      "Mieterzufriedenheit"
+    ],
+    "search_keywords_en": [
+      "residential management",
+      "property manager",
+      "tenant satisfaction"
+    ],
+    "priority": "medium",
+    "source_hint": "Verwaltervertrag",
+    "llm_instruction": "Describe residential property management: company, fee, scope, tenant satisfaction.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-012",
+    "category": "residential_specific",
+    "subcategory": "Sozialwohnungen",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Bestehen Sozialbindungen oder Mietpreisbindungen?",
+    "question_en": "Are there social housing obligations or rent restrictions?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Sozialbindung",
+      "Mietpreisbindung",
+      "geförderter Wohnungsbau",
+      "WoBindG"
+    ],
+    "search_keywords_en": [
+      "social housing",
+      "rent restriction",
+      "subsidized housing"
+    ],
+    "priority": "critical",
+    "source_hint": "Förderbescheide",
+    "llm_instruction": "Identify units with Sozialbindung: number, remaining term, rent levels, restrictions.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": "WoBindG, WoFG",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-013",
+    "category": "residential_specific",
+    "subcategory": "Eigentumsumwandlung",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Ist eine Aufteilung in Eigentumswohnungen möglich oder geplant?",
+    "question_en": "Is a conversion to condominiums possible or planned?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Eigentumsumwandlung",
+      "Aufteilung",
+      "Abgeschlossenheit",
+      "WEG"
+    ],
+    "search_keywords_en": [
+      "condominium conversion",
+      "subdivision",
+      "WEG"
+    ],
+    "priority": "high",
+    "source_hint": "Teilungserklärung, Abgeschlossenheitsbescheinigung",
+    "llm_instruction": "Assess conversion potential: Abgeschlossenheitsbescheinigung availability, Milieuschutz restrictions.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": "WEG §3, BauGB §172",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-014",
+    "category": "residential_specific",
+    "subcategory": "Mieterfluktuation",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Wie hoch ist die Mieterfluktuation?",
+    "question_en": "What is the tenant turnover rate?",
+    "expected_format": "numeric",
+    "search_keywords_de": [
+      "Fluktuation",
+      "Mieterwechsel",
+      "Umzug"
+    ],
+    "search_keywords_en": [
+      "tenant turnover",
+      "move-out rate"
+    ],
+    "priority": "high",
+    "source_hint": "Vermietungshistorie",
+    "llm_instruction": "Calculate annual turnover rate. Compare with market benchmark.",
+    "validation_rule": "numeric_percent",
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-015",
+    "category": "residential_specific",
+    "subcategory": "Leerstandsmanagement",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Wie werden Leerstände vermarktet und wie lange dauert die Neuvermietung?",
+    "question_en": "How are vacancies marketed and how long does re-letting take?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Leerstandsmanagement",
+      "Neuvermietung",
+      "Vermarktung",
+      "Vermarktungsdauer"
+    ],
+    "search_keywords_en": [
+      "vacancy management",
+      "re-letting",
+      "marketing period"
+    ],
+    "priority": "high",
+    "source_hint": "Vermietungsstatus",
+    "llm_instruction": "Describe re-letting process and average void period.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-016",
+    "category": "residential_specific",
+    "subcategory": "Ausstattungsstandard",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Welcher Ausstattungsstandard ist vorhanden (einfach, mittel, gehoben)?",
+    "question_en": "What fit-out standard exists (basic, standard, upscale)?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Ausstattung",
+      "Wohnungsstandard",
+      "Küche",
+      "Bad",
+      "Bodenbelag"
+    ],
+    "search_keywords_en": [
+      "fit-out",
+      "apartment standard",
+      "kitchen",
+      "bathroom"
+    ],
+    "priority": "high",
+    "source_hint": "Wohnungsbesichtigung",
+    "llm_instruction": "Classify apartment standard. Describe typical fit-out: kitchen, bathroom, flooring, heating.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 6,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-017",
+    "category": "residential_specific",
+    "subcategory": "Balkone/Terrassen",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Verfügen die Wohnungen über Balkone, Terrassen oder Gärten?",
+    "question_en": "Do apartments have balconies, terraces, or gardens?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Balkon",
+      "Terrasse",
+      "Garten",
+      "Loggia"
+    ],
+    "search_keywords_en": [
+      "balcony",
+      "terrace",
+      "garden",
+      "loggia"
+    ],
+    "priority": "medium",
+    "source_hint": "Grundrisse",
+    "llm_instruction": "Count units with outdoor space. Note type and size.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 4,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-018",
+    "category": "residential_specific",
+    "subcategory": "Keller",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Sind den Wohnungen Kellerräume zugeordnet?",
+    "question_en": "Are basement storage rooms allocated to apartments?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Kellerraum",
+      "Kellerabteil",
+      "Abstellraum"
+    ],
+    "search_keywords_en": [
+      "basement storage",
+      "cellar",
+      "storage room"
+    ],
+    "priority": "medium",
+    "source_hint": "Grundrisse",
+    "llm_instruction": "Verify allocation of basement storage to each unit.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 4,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-019",
+    "category": "residential_specific",
+    "subcategory": "Waschküche",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Gibt es eine Gemeinschaftswaschküche oder eigene Anschlüsse?",
+    "question_en": "Is there a communal laundry or individual connections?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Waschküche",
+      "Waschmaschinenanschluss",
+      "Gemeinschaftswaschküche"
+    ],
+    "search_keywords_en": [
+      "laundry room",
+      "washing machine connection"
+    ],
+    "priority": "low",
+    "source_hint": "Grundrisse",
+    "llm_instruction": "Describe laundry facilities: communal room, in-unit connections.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 3,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-020",
+    "category": "residential_specific",
+    "subcategory": "Heizkostenabrechnung",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Wird die Heizkostenabrechnung nach HeizkostenV korrekt durchgeführt?",
+    "question_en": "Is the heating cost allocation per HeizkostenV correct?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Heizkostenabrechnung",
+      "HeizkostenV",
+      "Verbrauchserfassung",
+      "Wärmezähler"
+    ],
+    "search_keywords_en": [
+      "heating cost allocation",
+      "HeizkostenV",
+      "consumption metering"
+    ],
+    "priority": "high",
+    "source_hint": "Heizkostenabrechnungen",
+    "llm_instruction": "Verify compliance with HeizkostenV: metering, allocation ratio (50-70% consumption-based).",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": "HeizkostenV",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-021",
+    "category": "residential_specific",
+    "subcategory": "CO2-Kosten",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Wie werden die CO2-Kosten zwischen Vermieter und Mieter aufgeteilt?",
+    "question_en": "How are CO2 costs split between landlord and tenant?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "CO2-Kosten",
+      "CO2KostAufG",
+      "Kohlendioxidkostenaufteilung"
+    ],
+    "search_keywords_en": [
+      "CO2 cost",
+      "carbon tax",
+      "CO2KostAufG"
+    ],
+    "priority": "high",
+    "source_hint": "Energieausweis, NK-Abrechnung",
+    "llm_instruction": "Calculate CO2 cost split per CO2KostAufG based on building energy class.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": "CO2KostAufG",
+    "requires_table_qa": true,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "RES-022",
+    "category": "residential_specific",
+    "subcategory": "Mietrecht",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Sind alle Mietverträge mietrechtlich konform (AGB-Kontrolle)?",
+    "question_en": "Are all leases compliant with tenant law (standard terms review)?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "AGB-Kontrolle",
+      "Mietrecht",
+      "unwirksame Klausel",
+      "BGH-Rechtsprechung"
+    ],
+    "search_keywords_en": [
+      "standard terms",
+      "tenant law",
+      "invalid clause",
+      "BGH case law"
+    ],
+    "priority": "high",
+    "source_hint": "Mietverträge",
+    "llm_instruction": "Review lease standard terms against current BGH case law. Flag invalid clauses (esp. Schönheitsreparaturen, Kleinreparaturen).",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 8,
+    "regulatory_reference": "BGB §305 ff.",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-023",
+    "category": "residential_specific",
+    "subcategory": "Gemeinschaftsflächen",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Wie ist der Zustand der Gemeinschaftsflächen (Treppenhaus, Flure)?",
+    "question_en": "What is the condition of common areas (staircase, corridors)?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Treppenhaus",
+      "Gemeinschaftsfläche",
+      "Flur",
+      "Eingangsbereich"
+    ],
+    "search_keywords_en": [
+      "staircase",
+      "common area",
+      "corridor",
+      "entrance"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Assess condition of common areas: staircase, corridors, entrance, mailbox area.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-024",
+    "category": "residential_specific",
+    "subcategory": "Gewerbeanteil",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Wie hoch ist der Gewerbeanteil im Wohnobjekt?",
+    "question_en": "What is the commercial share in the residential property?",
+    "expected_format": "numeric",
+    "search_keywords_de": [
+      "Gewerbeanteil",
+      "Gewerbemieter",
+      "Erdgeschoss"
+    ],
+    "search_keywords_en": [
+      "commercial share",
+      "commercial tenant",
+      "ground floor"
+    ],
+    "priority": "high",
+    "source_hint": "Mieterliste",
+    "llm_instruction": "Calculate commercial share by area and income. Assess impact on USt option and erweiterte Kürzung.",
+    "validation_rule": "numeric_percent",
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-025",
+    "category": "residential_specific",
+    "subcategory": "Seniorengerecht",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Sind die Wohnungen seniorengerecht oder barrierefrei?",
+    "question_en": "Are apartments senior-friendly or barrier-free?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "seniorengerecht",
+      "barrierefrei",
+      "altersgerecht"
+    ],
+    "search_keywords_en": [
+      "senior-friendly",
+      "barrier-free",
+      "age-appropriate"
+    ],
+    "priority": "medium",
+    "source_hint": "Grundrisse, TDD-Bericht",
+    "llm_instruction": "Assess accessibility of residential units: elevator, barrier-free bathrooms, thresholds.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 4,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-026",
+    "category": "residential_specific",
+    "subcategory": "Dachgeschossausbau",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Besteht Potenzial für Dachgeschossausbau?",
+    "question_en": "Is there potential for attic conversion?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Dachgeschossausbau",
+      "DG-Ausbau",
+      "Aufstockung"
+    ],
+    "search_keywords_en": [
+      "attic conversion",
+      "loft conversion",
+      "roof extension"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht, B-Plan",
+    "llm_instruction": "Assess DG conversion potential: structural capacity, B-Plan height limits, fire escape.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 6,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "RES-027",
+    "category": "residential_specific",
+    "subcategory": "Außenanlagen",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Wie ist der Zustand der Außenanlagen und des Innenhofs?",
+    "question_en": "What is the condition of outdoor areas and courtyard?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Außenanlagen",
+      "Innenhof",
+      "Spielplatz",
+      "Garten"
+    ],
+    "search_keywords_en": [
+      "outdoor areas",
+      "courtyard",
+      "playground",
+      "garden"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Assess outdoor areas: courtyard, playground, green space, parking.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 4,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-028",
+    "category": "residential_specific",
+    "subcategory": "Schallschutz",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Wie ist der Schallschutz zwischen den Wohneinheiten?",
+    "question_en": "What is the sound insulation between residential units?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Schallschutz",
+      "Trittschall",
+      "Luftschall",
+      "DIN 4109"
+    ],
+    "search_keywords_en": [
+      "sound insulation",
+      "impact sound",
+      "airborne sound"
+    ],
+    "priority": "high",
+    "source_hint": "TDD-Bericht, Schallschutzgutachten",
+    "llm_instruction": "Assess sound insulation between units per DIN 4109. Flag deficiencies.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": "DIN 4109",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-029",
+    "category": "residential_specific",
+    "subcategory": "Mietendeckel",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Sind landesrechtliche Mietregulierungen (z.B. ehemaliger Berliner Mietendeckel) relevant?",
+    "question_en": "Are state-level rent regulations relevant?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Mietendeckel",
+      "landesrechtliche Regulierung",
+      "Mietenbegrenzung"
+    ],
+    "search_keywords_en": [
+      "rent cap",
+      "state regulation",
+      "rent limit"
+    ],
+    "priority": "high",
+    "source_hint": "Landesrecht",
+    "llm_instruction": "Check for any state-level rent regulation beyond federal Mietpreisbremse.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RES-030",
+    "category": "residential_specific",
+    "subcategory": "Wohnungsmarkt",
+    "asset_classes": [
+      "residential"
+    ],
+    "question_de": "Wie ist die Wohnungsmarktsituation im Mikrostandort?",
+    "question_en": "What is the residential market situation at the micro-location?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Wohnungsmarkt",
+      "Mikrostandort",
+      "Mietniveau",
+      "Nachfrage"
+    ],
+    "search_keywords_en": [
+      "residential market",
+      "micro-location",
+      "rent level",
+      "demand"
+    ],
+    "priority": "high",
+    "source_hint": "Marktberichte",
+    "llm_instruction": "Analyze local residential market: rent levels, vacancy, demand drivers, demographics.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": true
+  }
+]

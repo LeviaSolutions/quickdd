@@ -1,0 +1,1100 @@
+[
+  {
+    "question_id": "RET-001",
+    "category": "retail_specific",
+    "subcategory": "Verkaufsfläche",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Wie groß ist die Verkaufsfläche und wie ist sie aufgeteilt?",
+    "question_en": "What is the retail sales area and how is it divided?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Verkaufsfläche",
+      "Ladenfläche",
+      "Aufteilung"
+    ],
+    "search_keywords_en": [
+      "sales area",
+      "retail area",
+      "shop floor"
+    ],
+    "priority": "critical",
+    "source_hint": "Flächenaufstellung",
+    "llm_instruction": "Break down by sales area, storage, back-of-house.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-002",
+    "category": "retail_specific",
+    "subcategory": "Einzelhandelslage",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "In welcher Einzelhandelslage befindet sich das Objekt (1a, 1b, Stadtteil)?",
+    "question_en": "What retail location is the property in (prime, secondary, suburban)?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "1a-Lage",
+      "Einzelhandelslage",
+      "Fußgängerzone",
+      "Einkaufsstraße"
+    ],
+    "search_keywords_en": [
+      "prime location",
+      "retail pitch",
+      "pedestrian zone",
+      "high street"
+    ],
+    "priority": "critical",
+    "source_hint": "Standortanalyse",
+    "llm_instruction": "Classify retail location quality. Describe pedestrian flow and surrounding retail environment.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-003",
+    "category": "retail_specific",
+    "subcategory": "Passantenfrequenz",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Wie hoch ist die Passantenfrequenz?",
+    "question_en": "What is the footfall/pedestrian frequency?",
+    "expected_format": "numeric",
+    "search_keywords_de": [
+      "Passantenfrequenz",
+      "Fußgängerfrequenz",
+      "Kundenfrequenz"
+    ],
+    "search_keywords_en": [
+      "footfall",
+      "pedestrian frequency",
+      "customer traffic"
+    ],
+    "priority": "high",
+    "source_hint": "Frequenzmessung",
+    "llm_instruction": "Extract or estimate footfall data. Compare with location benchmarks.",
+    "validation_rule": "numeric_count",
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-004",
+    "category": "retail_specific",
+    "subcategory": "Einzelhandelsmiete",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Wie hoch ist die erzielte Miete pro qm im Vergleich zur Marktmiete?",
+    "question_en": "How does the rent per sqm compare to market rent?",
+    "expected_format": "numeric",
+    "search_keywords_de": [
+      "Einzelhandelsmiete",
+      "Miete pro qm",
+      "Marktmiete"
+    ],
+    "search_keywords_en": [
+      "retail rent",
+      "rent per sqm",
+      "market rent"
+    ],
+    "priority": "critical",
+    "source_hint": "Mietverträge, Marktberichte",
+    "llm_instruction": "Compare current retail rents with local market rents.",
+    "validation_rule": "numeric_eur_sqm",
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "RET-005",
+    "category": "retail_specific",
+    "subcategory": "Umsatzmiete",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Bestehen Umsatzmietklauseln?",
+    "question_en": "Are there turnover rent clauses?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Umsatzmiete",
+      "Mindestmiete",
+      "Umsatzbeteiligung",
+      "Prozentmiete"
+    ],
+    "search_keywords_en": [
+      "turnover rent",
+      "percentage rent",
+      "minimum rent"
+    ],
+    "priority": "high",
+    "source_hint": "Mietverträge",
+    "llm_instruction": "Extract turnover rent provisions: minimum rent, percentage above threshold, reporting requirements.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 8,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-006",
+    "category": "retail_specific",
+    "subcategory": "Schaufenster",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Wie ist die Schaufenterfront (Länge, Sichtbarkeit)?",
+    "question_en": "What is the shop front (length, visibility)?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Schaufenster",
+      "Schaufensterfront",
+      "Sichtbarkeit",
+      "Frontbreite"
+    ],
+    "search_keywords_en": [
+      "shop front",
+      "window display",
+      "visibility",
+      "frontage"
+    ],
+    "priority": "high",
+    "source_hint": "Lageplan, Fotos",
+    "llm_instruction": "Measure and describe shop front: length, glazing, visibility from street.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-007",
+    "category": "retail_specific",
+    "subcategory": "Branchenmix",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Wie ist der Branchenmix im Objekt und in der Umgebung?",
+    "question_en": "What is the tenant/trade mix in the property and surroundings?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Branchenmix",
+      "Sortiment",
+      "Einzelhandel",
+      "Gastronomie"
+    ],
+    "search_keywords_en": [
+      "tenant mix",
+      "trade mix",
+      "retail",
+      "food & beverage"
+    ],
+    "priority": "high",
+    "source_hint": "Mieterliste",
+    "llm_instruction": "Analyze trade mix: fashion, F&B, services, etc. Compare with location concept.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-008",
+    "category": "retail_specific",
+    "subcategory": "Ankermieter",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Gibt es Ankermieter und wie ist deren Mietvertragssituation?",
+    "question_en": "Are there anchor tenants and what is their lease status?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Ankermieter",
+      "Frequenzbringer",
+      "Hauptmieter"
+    ],
+    "search_keywords_en": [
+      "anchor tenant",
+      "traffic generator",
+      "main tenant"
+    ],
+    "priority": "critical",
+    "source_hint": "Mietverträge",
+    "llm_instruction": "Identify anchor tenants. Analyze lease terms, rent level, and renewal probability.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-009",
+    "category": "retail_specific",
+    "subcategory": "Konkurrenzschutz",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Welche Konkurrenzschutzklauseln bestehen?",
+    "question_en": "What non-compete clauses exist?",
+    "expected_format": "list",
+    "search_keywords_de": [
+      "Konkurrenzschutz",
+      "Branchenschutz",
+      "Exklusivität",
+      "Sortimentsschutz"
+    ],
+    "search_keywords_en": [
+      "non-compete",
+      "trade protection",
+      "exclusivity"
+    ],
+    "priority": "high",
+    "source_hint": "Mietverträge",
+    "llm_instruction": "Map all non-compete/trade protection clauses. Assess impact on re-letting flexibility.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 8,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-009B",
+    "category": "retail_specific",
+    "subcategory": "Öffnungszeiten",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Welche Öffnungszeiten gelten und bestehen Betriebspflichten?",
+    "question_en": "What opening hours apply and are there operating obligations?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Öffnungszeiten",
+      "Ladenschluss",
+      "Betriebspflicht"
+    ],
+    "search_keywords_en": [
+      "opening hours",
+      "trading hours",
+      "operating obligation"
+    ],
+    "priority": "high",
+    "source_hint": "Mietverträge",
+    "llm_instruction": "Extract opening hours obligations and Betriebspflicht clauses.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": "LadSchlG (Landesrecht)",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-010",
+    "category": "retail_specific",
+    "subcategory": "Center Management",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Wie ist das Center-/Quartiersmanagement organisiert?",
+    "question_en": "How is center/quarter management organized?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Center Management",
+      "Quartiersmanagement",
+      "Vermietungsmanagement"
+    ],
+    "search_keywords_en": [
+      "center management",
+      "quarter management"
+    ],
+    "priority": "medium",
+    "source_hint": "Management-Vertrag",
+    "llm_instruction": "Describe center management scope, fee structure, and performance.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-011",
+    "category": "retail_specific",
+    "subcategory": "Werbung/Marketing",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Welche Werbe- und Marketingmaßnahmen werden durchgeführt?",
+    "question_en": "What advertising and marketing measures are conducted?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Marketing",
+      "Werbung",
+      "Werbefonds",
+      "Marketingkonzept"
+    ],
+    "search_keywords_en": [
+      "marketing",
+      "advertising",
+      "marketing fund"
+    ],
+    "priority": "medium",
+    "source_hint": "Marketing-Budget",
+    "llm_instruction": "Describe marketing activities and budget. Check if tenants contribute to a Werbefonds.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 4,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-012",
+    "category": "retail_specific",
+    "subcategory": "E-Commerce Auswirkung",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Wie ist die E-Commerce-Resilienz der Mieterstruktur?",
+    "question_en": "How e-commerce-resilient is the tenant structure?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "E-Commerce",
+      "Online-Handel",
+      "stationärer Handel",
+      "Omnichannel"
+    ],
+    "search_keywords_en": [
+      "e-commerce",
+      "online retail",
+      "brick-and-mortar",
+      "omnichannel"
+    ],
+    "priority": "high",
+    "source_hint": "Mieterliste",
+    "llm_instruction": "Assess e-commerce resilience: proportion of experiential/F&B/service tenants vs. pure retail.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "RET-013",
+    "category": "retail_specific",
+    "subcategory": "Lebensmitteleinzelhandel",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Ist ein Lebensmitteleinzelhandel als Ankermieter vorhanden?",
+    "question_en": "Is there a food retail anchor tenant?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Lebensmitteleinzelhandel",
+      "Supermarkt",
+      "Discounter",
+      "Vollsortimenter"
+    ],
+    "search_keywords_en": [
+      "food retail",
+      "supermarket",
+      "discounter"
+    ],
+    "priority": "high",
+    "source_hint": "Mietverträge",
+    "llm_instruction": "Identify food retail anchor. Note lease terms and revenue performance.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-014",
+    "category": "retail_specific",
+    "subcategory": "Lieferzone",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Wie ist die Anlieferungssituation (Lieferzone, Zeiten)?",
+    "question_en": "What is the delivery situation (loading zone, times)?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Anlieferung",
+      "Lieferzone",
+      "Lieferverkehr",
+      "Anlieferrampe"
+    ],
+    "search_keywords_en": [
+      "delivery",
+      "loading zone",
+      "delivery traffic"
+    ],
+    "priority": "high",
+    "source_hint": "Lageplan, Betriebskonzept",
+    "llm_instruction": "Describe delivery access: loading zone location, size, permitted times.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 6,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-015",
+    "category": "retail_specific",
+    "subcategory": "Gastronomie",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Welcher Gastronomieanteil besteht und wie ist die Abluft-/Fettabscheider-Situation?",
+    "question_en": "What is the F&B share and what is the exhaust/grease trap situation?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Gastronomie",
+      "Abluft",
+      "Fettabscheider",
+      "Küche"
+    ],
+    "search_keywords_en": [
+      "food & beverage",
+      "exhaust",
+      "grease trap",
+      "kitchen"
+    ],
+    "priority": "high",
+    "source_hint": "Mietverträge, TDD-Bericht",
+    "llm_instruction": "Assess F&B share and infrastructure: kitchen exhaust systems, grease traps, water/gas supply.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-016",
+    "category": "retail_specific",
+    "subcategory": "Barrierefreiheit",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Ist der Einzelhandelsbereich barrierefrei zugänglich?",
+    "question_en": "Is the retail area barrier-free accessible?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Barrierefreiheit",
+      "Aufzug",
+      "Rampe",
+      "Rolltreppe"
+    ],
+    "search_keywords_en": [
+      "accessibility",
+      "elevator",
+      "ramp",
+      "escalator"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Assess barrier-free access for retail customers.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": "DIN 18040-1",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-017",
+    "category": "retail_specific",
+    "subcategory": "Parkhaus",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Sind Kundenparkplätze/Parkhaus vorhanden?",
+    "question_en": "Are customer parking/parking structures available?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Kundenparkplatz",
+      "Parkhaus",
+      "Parkdeck"
+    ],
+    "search_keywords_en": [
+      "customer parking",
+      "parking garage"
+    ],
+    "priority": "high",
+    "source_hint": "Lageplan",
+    "llm_instruction": "Count and describe customer parking: number, type (surface/structure), management, tariffs.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-018",
+    "category": "retail_specific",
+    "subcategory": "Einzelhandelskonzept",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Steht das Objekt im Einklang mit dem kommunalen Einzelhandelskonzept?",
+    "question_en": "Does the property align with the municipal retail concept?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Einzelhandelskonzept",
+      "Zentrenkonzept",
+      "Sortimentsliste"
+    ],
+    "search_keywords_en": [
+      "retail concept",
+      "center concept",
+      "retail zoning"
+    ],
+    "priority": "high",
+    "source_hint": "Kommunales Einzelhandelskonzept",
+    "llm_instruction": "Check alignment with municipal retail planning: approved use types, sales area limits.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "RET-019",
+    "category": "retail_specific",
+    "subcategory": "Großflächiger Einzelhandel",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Handelt es sich um großflächigen Einzelhandel (>800qm VKF)?",
+    "question_en": "Is this large-scale retail (>800sqm sales area)?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "großflächig",
+      ">800qm",
+      "Sondergebiet",
+      "Verträglichkeitsgutachten"
+    ],
+    "search_keywords_en": [
+      "large-scale retail",
+      ">800sqm",
+      "special area"
+    ],
+    "priority": "high",
+    "source_hint": "Baugenehmigung",
+    "llm_instruction": "Determine if >800sqm sales area trigger applies. Check Verträglichkeitsgutachten requirement.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 8,
+    "regulatory_reference": "BauNVO §11 Abs. 3",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-020",
+    "category": "retail_specific",
+    "subcategory": "Sonntagsöffnung",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Welche Sonntagsöffnungsmöglichkeiten bestehen?",
+    "question_en": "What Sunday opening possibilities exist?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Sonntagsöffnung",
+      "Ladenschluss",
+      "verkaufsoffen"
+    ],
+    "search_keywords_en": [
+      "Sunday opening",
+      "trading hours"
+    ],
+    "priority": "medium",
+    "source_hint": "LadSchlG",
+    "llm_instruction": "Check Sunday opening rules per state law.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 4,
+    "regulatory_reference": "LadSchlG (Landesrecht)",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-021",
+    "category": "retail_specific",
+    "subcategory": "Mietauslauf",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Wie ist das Mietauslaufprofil der Einzelhandelsflächen?",
+    "question_en": "What is the lease expiry profile of retail units?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Mietauslaufprofil",
+      "Auslaufprofil",
+      "Leerstandsrisiko"
+    ],
+    "search_keywords_en": [
+      "lease expiry profile",
+      "rollover risk"
+    ],
+    "priority": "critical",
+    "source_hint": "Mieterliste",
+    "llm_instruction": "Create retail lease expiry profile. Identify concentrated rollover risk.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-022",
+    "category": "retail_specific",
+    "subcategory": "Pop-Up",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Bestehen Pop-Up oder Kurzzeitvermietungen?",
+    "question_en": "Are there pop-up or short-term lettings?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Pop-Up",
+      "Kurzzeitmiete",
+      "temporäre Nutzung"
+    ],
+    "search_keywords_en": [
+      "pop-up",
+      "short-term letting",
+      "temporary use"
+    ],
+    "priority": "medium",
+    "source_hint": "Mietverträge",
+    "llm_instruction": "Identify pop-up or temporary lettings. Note terms and conversion potential.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 4,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-023",
+    "category": "retail_specific",
+    "subcategory": "Fassadenwerbung",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Welche Werbemöglichkeiten an der Fassade bestehen?",
+    "question_en": "What facade advertising possibilities exist?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Fassadenwerbung",
+      "Leuchtschrift",
+      "Werbeanlage"
+    ],
+    "search_keywords_en": [
+      "facade advertising",
+      "illuminated sign"
+    ],
+    "priority": "medium",
+    "source_hint": "Baugenehmigung, Gestaltungssatzung",
+    "llm_instruction": "Describe advertising/signage possibilities and restrictions.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 4,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-024",
+    "category": "retail_specific",
+    "subcategory": "Nahversorgung",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Handelt es sich um ein Nahversorgungszentrum?",
+    "question_en": "Is this a neighbourhood/convenience retail centre?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Nahversorgung",
+      "Grundversorgung",
+      "Wohngebietsnähe"
+    ],
+    "search_keywords_en": [
+      "neighbourhood retail",
+      "convenience centre"
+    ],
+    "priority": "medium",
+    "source_hint": "Standortanalyse",
+    "llm_instruction": "Classify retail type and catchment area.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-025",
+    "category": "retail_specific",
+    "subcategory": "Einzelhandelsmiete Staffelung",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Wie staffelt sich die Miete über die Ladenfläche (Zone A, B, C)?",
+    "question_en": "How is rent graded across the shop floor (Zone A, B, C)?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Zone A",
+      "Zone B",
+      "Zone C",
+      "Zonierung",
+      "ITZA"
+    ],
+    "search_keywords_en": [
+      "Zone A",
+      "Zone B",
+      "Zone C",
+      "zoning",
+      "ITZA"
+    ],
+    "priority": "medium",
+    "source_hint": "Mietverträge",
+    "llm_instruction": "Analyze zoning/ITZA valuation of retail rents across the floor area.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-026",
+    "category": "retail_specific",
+    "subcategory": "Mietermix-Steuerung",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Welche Vorgaben für den Mietermix bestehen?",
+    "question_en": "What guidelines exist for tenant mix control?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Mietermix",
+      "Vermietungsrichtlinie",
+      "Sortimentssteuerung"
+    ],
+    "search_keywords_en": [
+      "tenant mix",
+      "letting policy",
+      "merchandise control"
+    ],
+    "priority": "high",
+    "source_hint": "Vermietungskonzept",
+    "llm_instruction": "Describe tenant mix strategy and contractual controls.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 6,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-027",
+    "category": "retail_specific",
+    "subcategory": "Einzugsgebiet",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Wie groß ist das Einzugsgebiet und wie hoch ist die Kaufkraft?",
+    "question_en": "What is the catchment area and purchasing power?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Einzugsgebiet",
+      "Kaufkraft",
+      "Kaufkraftkennziffer",
+      "Einwohner"
+    ],
+    "search_keywords_en": [
+      "catchment area",
+      "purchasing power",
+      "population"
+    ],
+    "priority": "high",
+    "source_hint": "Standortanalyse",
+    "llm_instruction": "Analyze catchment: population, purchasing power index, competition.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-028",
+    "category": "retail_specific",
+    "subcategory": "Haustechnik Retail",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Ist die Haustechnik für Einzelhandelsnutzung geeignet (Kühlung, Lüftung)?",
+    "question_en": "Are building services suitable for retail use (cooling, ventilation)?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Kühlung",
+      "Lüftung",
+      "Einzelhandel",
+      "Haustechnik"
+    ],
+    "search_keywords_en": [
+      "cooling",
+      "ventilation",
+      "retail",
+      "building services"
+    ],
+    "priority": "high",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Assess HVAC adequacy for retail: cooling loads, ventilation rates, exhaust for F&B.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-029",
+    "category": "retail_specific",
+    "subcategory": "Fluktuation",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Wie hoch ist die Mieterfluktuation?",
+    "question_en": "What is the tenant turnover rate?",
+    "expected_format": "numeric",
+    "search_keywords_de": [
+      "Fluktuation",
+      "Mieterwechsel",
+      "Umschlag"
+    ],
+    "search_keywords_en": [
+      "tenant turnover",
+      "churn rate"
+    ],
+    "priority": "high",
+    "source_hint": "Vermietungshistorie",
+    "llm_instruction": "Calculate tenant turnover rate over last 3-5 years. Identify problem units.",
+    "validation_rule": "numeric_percent",
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-030",
+    "category": "retail_specific",
+    "subcategory": "Click & Collect",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Sind Click-and-Collect-Flächen oder -Infrastruktur vorhanden?",
+    "question_en": "Are click-and-collect areas or infrastructure available?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Click and Collect",
+      "Abholstation",
+      "Paketstation"
+    ],
+    "search_keywords_en": [
+      "click and collect",
+      "pickup station",
+      "parcel locker"
+    ],
+    "priority": "medium",
+    "source_hint": "Grundrisse",
+    "llm_instruction": "Identify click-and-collect infrastructure and capacity for omnichannel retail.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 4,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-031",
+    "category": "retail_specific",
+    "subcategory": "Veranstaltungen",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Werden Veranstaltungen und Events im Center durchgeführt?",
+    "question_en": "Are events held in the center?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Veranstaltung",
+      "Event",
+      "Versammlungsstätte"
+    ],
+    "search_keywords_en": [
+      "event",
+      "venue",
+      "assembly"
+    ],
+    "priority": "low",
+    "source_hint": "Marketing-Bericht",
+    "llm_instruction": "Describe event activities and their impact on footfall.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 3,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-032",
+    "category": "retail_specific",
+    "subcategory": "Sicherheitskonzept",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Besteht ein Sicherheitskonzept für den Einzelhandelsbereich?",
+    "question_en": "Is there a security concept for the retail area?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Sicherheit",
+      "Diebstahl",
+      "Videoüberwachung"
+    ],
+    "search_keywords_en": [
+      "security",
+      "theft",
+      "CCTV"
+    ],
+    "priority": "medium",
+    "source_hint": "Sicherheitskonzept",
+    "llm_instruction": "Describe security measures: CCTV, guards, access control.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 4,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-033",
+    "category": "retail_specific",
+    "subcategory": "Modernisierung Retail",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Welcher Modernisierungsbedarf besteht für den Einzelhandelsbereich?",
+    "question_en": "What modernization is needed for the retail area?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Modernisierung",
+      "Revitalisierung",
+      "Refurbishment"
+    ],
+    "search_keywords_en": [
+      "modernization",
+      "revitalization",
+      "refurbishment"
+    ],
+    "priority": "high",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Assess modernization needs to maintain retail competitiveness.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "RET-034",
+    "category": "retail_specific",
+    "subcategory": "Mietvertragsgestaltung",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Wie sind die Einzelhandelsmietverträge strukturiert (Triple-Net, Service Charge Cap)?",
+    "question_en": "How are retail leases structured (triple-net, service charge cap)?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Triple-Net",
+      "Service Charge Cap",
+      "Mietvertragsstruktur"
+    ],
+    "search_keywords_en": [
+      "triple-net",
+      "service charge cap",
+      "lease structure"
+    ],
+    "priority": "high",
+    "source_hint": "Mietverträge",
+    "llm_instruction": "Analyze retail lease structures: net vs. gross, service charge arrangements, caps.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "RET-035",
+    "category": "retail_specific",
+    "subcategory": "Digitalisierung",
+    "asset_classes": [
+      "retail"
+    ],
+    "question_de": "Welche digitalen Infrastrukturen bestehen (WLAN, Digital Signage)?",
+    "question_en": "What digital infrastructure exists (WiFi, digital signage)?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "WLAN",
+      "Digital Signage",
+      "digitale Infrastruktur"
+    ],
+    "search_keywords_en": [
+      "WiFi",
+      "digital signage",
+      "digital infrastructure"
+    ],
+    "priority": "low",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Describe digital infrastructure: public WiFi, digital signage, smart building features.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 3,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  }
+]

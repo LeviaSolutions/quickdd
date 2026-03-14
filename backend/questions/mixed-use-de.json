@@ -1,0 +1,614 @@
+[
+  {
+    "question_id": "MIX-001",
+    "category": "mixed_use_specific",
+    "subcategory": "Nutzungsverteilung",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Wie ist die Nutzungsverteilung (Büro, Einzelhandel, Wohnen, Sonstige)?",
+    "question_en": "What is the use distribution (office, retail, residential, other)?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Nutzungsverteilung",
+      "Nutzungsmix",
+      "Flächenverteilung"
+    ],
+    "search_keywords_en": [
+      "use distribution",
+      "use mix",
+      "area allocation"
+    ],
+    "priority": "critical",
+    "source_hint": "Flächenaufstellung",
+    "llm_instruction": "Break down area and income by use type: office, retail, residential, other.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "MIX-002",
+    "category": "mixed_use_specific",
+    "subcategory": "Synergien",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Welche Synergien oder Konflikte bestehen zwischen den Nutzungsarten?",
+    "question_en": "What synergies or conflicts exist between use types?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Synergie",
+      "Nutzungskonflikt",
+      "Mischnutzung"
+    ],
+    "search_keywords_en": [
+      "synergy",
+      "use conflict",
+      "mixed use"
+    ],
+    "priority": "high",
+    "source_hint": "Betriebskonzept",
+    "llm_instruction": "Analyze synergies (shared parking, footfall) and conflicts (noise, operating hours, access).",
+    "validation_rule": null,
+    "depends_on": [
+      "MIX-001"
+    ],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "MIX-003",
+    "category": "mixed_use_specific",
+    "subcategory": "Getrennte Erschließung",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Sind die Nutzungsarten getrennt erschlossen (Eingänge, Aufzüge)?",
+    "question_en": "Are use types separately accessed (entrances, elevators)?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "getrennte Erschließung",
+      "separater Eingang",
+      "Aufzug"
+    ],
+    "search_keywords_en": [
+      "separate access",
+      "separate entrance",
+      "elevator"
+    ],
+    "priority": "high",
+    "source_hint": "Grundrisse",
+    "llm_instruction": "Check for separate access systems per use type.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "MIX-004",
+    "category": "mixed_use_specific",
+    "subcategory": "Betriebskosten Mixed",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Wie werden die Betriebskosten zwischen den Nutzungsarten aufgeteilt?",
+    "question_en": "How are operating costs allocated between use types?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Betriebskostenverteilung",
+      "Umlageschlüssel",
+      "Nutzungsart"
+    ],
+    "search_keywords_en": [
+      "cost allocation",
+      "allocation key",
+      "use type"
+    ],
+    "priority": "high",
+    "source_hint": "NK-Abrechnungen",
+    "llm_instruction": "Analyze service charge allocation methodology between use types.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "MIX-005",
+    "category": "mixed_use_specific",
+    "subcategory": "Umsatzsteuer Mixed",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Wie ist die umsatzsteuerliche Behandlung der verschiedenen Nutzungsarten?",
+    "question_en": "What is the VAT treatment of different use types?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Umsatzsteuer",
+      "Vorsteuerabzug",
+      "§9 UStG",
+      "Wohnen"
+    ],
+    "search_keywords_en": [
+      "VAT",
+      "input tax",
+      "VAT option",
+      "residential"
+    ],
+    "priority": "critical",
+    "source_hint": "Steuerberatung",
+    "llm_instruction": "Analyze VAT implications: residential = VAT-exempt, commercial = option possible. Calculate Vorsteuerabzugsquote.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": "UStG §4 Nr. 12, §9, §15a",
+    "requires_table_qa": false,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "MIX-006",
+    "category": "mixed_use_specific",
+    "subcategory": "Erweiterte Kürzung",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Ist die erweiterte Gewerbesteuerkürzung bei Mischnutzung gefährdet?",
+    "question_en": "Is the extended trade tax reduction at risk with mixed use?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "erweiterte Kürzung",
+      "Gewerbesteuer",
+      "Mischnutzung"
+    ],
+    "search_keywords_en": [
+      "extended reduction",
+      "trade tax",
+      "mixed use"
+    ],
+    "priority": "high",
+    "source_hint": "Steuerberatung",
+    "llm_instruction": "Assess whether mixed-use activities could jeopardize erweiterte Kürzung eligibility.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 8,
+    "regulatory_reference": "GewStG §9 Nr. 1",
+    "requires_table_qa": false,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "MIX-007",
+    "category": "mixed_use_specific",
+    "subcategory": "Teilungserklärung Mixed",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Wie regelt die Teilungserklärung die verschiedenen Nutzungsarten?",
+    "question_en": "How does the Teilungserklärung regulate different use types?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Teilungserklärung",
+      "Nutzungsart",
+      "Sondereigentum",
+      "Zweckbestimmung"
+    ],
+    "search_keywords_en": [
+      "Teilungserklärung",
+      "use type",
+      "purpose designation"
+    ],
+    "priority": "high",
+    "source_hint": "Teilungserklärung",
+    "llm_instruction": "Review Teilungserklärung for use type designations (Zweckbestimmung) and change-of-use restrictions.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": "WEG",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "MIX-008",
+    "category": "mixed_use_specific",
+    "subcategory": "Lärmschutz Mixed",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Wie ist der Schallschutz zwischen Wohn- und Gewerbenutzung?",
+    "question_en": "What is the sound insulation between residential and commercial use?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Schallschutz",
+      "Wohnen",
+      "Gewerbe",
+      "DIN 4109"
+    ],
+    "search_keywords_en": [
+      "sound insulation",
+      "residential",
+      "commercial"
+    ],
+    "priority": "high",
+    "source_hint": "Schallschutzgutachten",
+    "llm_instruction": "Verify sound insulation between residential and commercial areas per DIN 4109.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": "DIN 4109",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "MIX-009",
+    "category": "mixed_use_specific",
+    "subcategory": "Nutzungsänderung Mixed",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Können Nutzungsarten konvertiert werden (z.B. Büro zu Wohnen)?",
+    "question_en": "Can use types be converted (e.g. office to residential)?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Nutzungskonversion",
+      "Büro zu Wohnen",
+      "Umnutzung"
+    ],
+    "search_keywords_en": [
+      "use conversion",
+      "office to residential",
+      "conversion"
+    ],
+    "priority": "high",
+    "source_hint": "B-Plan, Baugenehmigung",
+    "llm_instruction": "Assess conversion flexibility: B-Plan permissions, structural suitability, fire safety implications.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "MIX-010",
+    "category": "mixed_use_specific",
+    "subcategory": "Bewertung Mixed",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Wie wird die Mischnutzung bewertet (getrennte Bewertung je Nutzungsart)?",
+    "question_en": "How is the mixed-use property valued (separate valuation by use type)?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Bewertung",
+      "Mischnutzung",
+      "Ertragswert",
+      "Nutzungsart"
+    ],
+    "search_keywords_en": [
+      "valuation",
+      "mixed use",
+      "income value",
+      "use type"
+    ],
+    "priority": "high",
+    "source_hint": "Bewertungsgutachten",
+    "llm_instruction": "Check whether valuation uses separate capitalization rates per use type.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "MIX-011",
+    "category": "mixed_use_specific",
+    "subcategory": "Quartiersentwicklung",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Ist das Objekt Teil einer Quartiersentwicklung?",
+    "question_en": "Is the property part of a quarter/neighbourhood development?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Quartiersentwicklung",
+      "Quartier",
+      "Masterplan"
+    ],
+    "search_keywords_en": [
+      "quarter development",
+      "neighbourhood",
+      "masterplan"
+    ],
+    "priority": "medium",
+    "source_hint": "Masterplan, Gemeinde",
+    "llm_instruction": "Assess quarter context: masterplan, phasing, shared infrastructure.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "MIX-012",
+    "category": "mixed_use_specific",
+    "subcategory": "Managementkomplexität",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Wie wird die Management-Komplexität der Mischnutzung adressiert?",
+    "question_en": "How is the management complexity of mixed use addressed?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Managementkomplexität",
+      "Mischnutzung",
+      "Property Management"
+    ],
+    "search_keywords_en": [
+      "management complexity",
+      "mixed use",
+      "property management"
+    ],
+    "priority": "medium",
+    "source_hint": "Verwaltervertrag",
+    "llm_instruction": "Assess PM capability and fee structure for managing multiple use types.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "MIX-013",
+    "category": "mixed_use_specific",
+    "subcategory": "Gemischte Mieterschaft",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Bestehen Regelungen zum Miteinander der verschiedenen Nutzergruppen?",
+    "question_en": "Are there regulations for coexistence of different user groups?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Hausordnung",
+      "Nutzergruppen",
+      "Koexistenz"
+    ],
+    "search_keywords_en": [
+      "house rules",
+      "user groups",
+      "coexistence"
+    ],
+    "priority": "medium",
+    "source_hint": "Hausordnung",
+    "llm_instruction": "Review house rules and operational procedures for managing different user groups.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 4,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "MIX-014",
+    "category": "mixed_use_specific",
+    "subcategory": "Anlieferung Mixed",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Wie ist die Anlieferung für Einzelhandel/Gastronomie getrennt von Wohnzugang?",
+    "question_en": "How is retail/F&B delivery separated from residential access?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Anlieferung",
+      "Lieferverkehr",
+      "getrennte Zufahrt"
+    ],
+    "search_keywords_en": [
+      "delivery",
+      "loading",
+      "separate access"
+    ],
+    "priority": "high",
+    "source_hint": "Betriebskonzept",
+    "llm_instruction": "Verify separation of commercial deliveries from residential areas.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 6,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "MIX-015",
+    "category": "mixed_use_specific",
+    "subcategory": "Stellplätze Mixed",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Wie sind die Stellplätze zwischen den Nutzungsarten aufgeteilt?",
+    "question_en": "How are parking spaces allocated between use types?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Stellplatzverteilung",
+      "Stellplatzschlüssel",
+      "Nutzungsart"
+    ],
+    "search_keywords_en": [
+      "parking allocation",
+      "parking ratio",
+      "use type"
+    ],
+    "priority": "high",
+    "source_hint": "Stellplatznachweis",
+    "llm_instruction": "Analyze parking allocation per use type. Check sufficiency.",
+    "validation_rule": "numeric_count",
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "MIX-016",
+    "category": "mixed_use_specific",
+    "subcategory": "Versicherung Mixed",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Wie sind die verschiedenen Nutzungsarten versicherungstechnisch abgedeckt?",
+    "question_en": "How are different use types covered by insurance?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Versicherung",
+      "Mischnutzung",
+      "Prämie"
+    ],
+    "search_keywords_en": [
+      "insurance",
+      "mixed use",
+      "premium"
+    ],
+    "priority": "medium",
+    "source_hint": "Versicherungspolicen",
+    "llm_instruction": "Verify insurance coverage spans all use types. Check for exclusions.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "MIX-017",
+    "category": "mixed_use_specific",
+    "subcategory": "GEG Mixed",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Wie ist die GEG-Compliance für die verschiedenen Nutzungszonen?",
+    "question_en": "What is the GEG compliance for different use zones?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "GEG",
+      "Mischnutzung",
+      "Nutzungszone",
+      "Energieausweis"
+    ],
+    "search_keywords_en": [
+      "GEG",
+      "mixed use",
+      "energy certificate"
+    ],
+    "priority": "high",
+    "source_hint": "Energieausweis",
+    "llm_instruction": "Assess GEG compliance separately per use zone if applicable.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": "GEG",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "MIX-018",
+    "category": "mixed_use_specific",
+    "subcategory": "Rendite Mixed",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Wie unterscheiden sich die Renditen je Nutzungsart?",
+    "question_en": "How do yields differ by use type?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Rendite",
+      "Nutzungsart",
+      "Mischkalkulation"
+    ],
+    "search_keywords_en": [
+      "yield",
+      "use type",
+      "blended calculation"
+    ],
+    "priority": "high",
+    "source_hint": "Mieterliste, Bewertung",
+    "llm_instruction": "Calculate yield per use type and blended yield.",
+    "validation_rule": "numeric_percent",
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "MIX-019",
+    "category": "mixed_use_specific",
+    "subcategory": "Erdgeschossnutzung",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Wie ist das Erdgeschoss genutzt und welche Potenziale bestehen?",
+    "question_en": "How is the ground floor used and what potential exists?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Erdgeschoss",
+      "EG-Nutzung",
+      "Einzelhandel",
+      "Gastronomie"
+    ],
+    "search_keywords_en": [
+      "ground floor",
+      "GF use",
+      "retail",
+      "F&B"
+    ],
+    "priority": "high",
+    "source_hint": "Grundrisse",
+    "llm_instruction": "Analyze ground floor usage and potential for more active/higher-value use.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 6,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "MIX-020",
+    "category": "mixed_use_specific",
+    "subcategory": "Brandschutz Mixed",
+    "asset_classes": [
+      "mixed_use"
+    ],
+    "question_de": "Sind die Brandschutzanforderungen für alle Nutzungsarten erfüllt?",
+    "question_en": "Are fire safety requirements met for all use types?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Brandschutz",
+      "Mischnutzung",
+      "Brandabschnitt",
+      "Nutzungseinheit"
+    ],
+    "search_keywords_en": [
+      "fire safety",
+      "mixed use",
+      "fire compartment"
+    ],
+    "priority": "critical",
+    "source_hint": "Brandschutzkonzept",
+    "llm_instruction": "Verify fire safety compliance for each use type: compartmentalization, escape routes, alarm systems.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  }
+]

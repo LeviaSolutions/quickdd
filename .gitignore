@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+dist-ssr/
+*.local
+
+# Tauri
+src-tauri/target/
+src-tauri/binaries/*.exe
+src-tauri/gen/
+
+# Python
+backend/__pycache__/
+backend/**/__pycache__/
+backend/**/*.pyc
+backend/.venv*/
+backend/venv/
+backend/dist/
+backend/build/
+*.egg-info/
+
+# Data
+data/projects/
+data/models/*.gguf
+data/logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment
+.env
+.env.local
+*.pem
+!src-tauri/keys/license-public.pem
+!backend/keys/license-public.pem
+*.key
+
+# Security analysis outputs (not for git)
+SECURITY_IMPLEMENTATION_PLAN.py
+security_tauri_side.rs
+SECURITY_ANALYSIS.txt

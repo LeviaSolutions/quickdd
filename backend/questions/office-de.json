@@ -1,0 +1,933 @@
+[
+  {
+    "question_id": "OFF-001",
+    "category": "office_specific",
+    "subcategory": "Büroflächen",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Wie hoch ist die vermietbare Bürofläche und wie ist sie aufgeteilt (Einzel-/Großraumbüro, Besprechung)?",
+    "question_en": "What is the lettable office area and how is it divided (cellular/open plan, meeting rooms)?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Bürofläche",
+      "Großraumbüro",
+      "Einzelbüro",
+      "Besprechungsraum"
+    ],
+    "search_keywords_en": [
+      "office area",
+      "open plan",
+      "cellular",
+      "meeting room"
+    ],
+    "priority": "high",
+    "source_hint": "Flächenaufstellung",
+    "llm_instruction": "Break down office area by type: open plan, cellular, meeting rooms, common areas.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-002",
+    "category": "office_specific",
+    "subcategory": "Flächeneffizienz",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Wie hoch ist die Flächeneffizienz (Verhältnis Mietfläche zu BGF)?",
+    "question_en": "What is the space efficiency (lettable area vs. GFA)?",
+    "expected_format": "numeric",
+    "search_keywords_de": [
+      "Flächeneffizienz",
+      "Mietfläche",
+      "BGF"
+    ],
+    "search_keywords_en": [
+      "space efficiency",
+      "lettable area",
+      "GFA"
+    ],
+    "priority": "high",
+    "source_hint": "Flächenberechnung",
+    "llm_instruction": "Calculate efficiency ratio. Compare with market benchmark (typically 65-80% for offices).",
+    "validation_rule": "numeric_percent",
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-003",
+    "category": "office_specific",
+    "subcategory": "Flexible Arbeitsplätze",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Sind flexible Bürokonzepte (Co-Working, Activity-Based Working) implementiert?",
+    "question_en": "Are flexible office concepts (co-working, activity-based) implemented?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Co-Working",
+      "Flex Office",
+      "Activity-Based Working",
+      "Desk Sharing"
+    ],
+    "search_keywords_en": [
+      "co-working",
+      "flex office",
+      "hot desking",
+      "activity-based"
+    ],
+    "priority": "medium",
+    "source_hint": "Mietverträge, Grundrisse",
+    "llm_instruction": "Assess extent of flexible workspace concepts and impact on space requirements.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-004",
+    "category": "office_specific",
+    "subcategory": "Raumklima",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Wie ist das Raumklima (Kühlung, Belüftung, Sonnenschutz) zu bewerten?",
+    "question_en": "How is the indoor climate (cooling, ventilation, sun protection) rated?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Raumklima",
+      "Kühlung",
+      "Belüftung",
+      "Sonnenschutz",
+      "Raumtemperatur"
+    ],
+    "search_keywords_en": [
+      "indoor climate",
+      "cooling",
+      "ventilation",
+      "sun protection"
+    ],
+    "priority": "high",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Assess indoor climate quality: cooling capacity (W/sqm), air exchange rates, sun protection systems.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-005",
+    "category": "office_specific",
+    "subcategory": "Doppelboden",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Ist ein Doppelboden oder Hohlraumboden vorhanden?",
+    "question_en": "Is a raised floor system installed?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Doppelboden",
+      "Hohlraumboden",
+      "Installationsboden"
+    ],
+    "search_keywords_en": [
+      "raised floor",
+      "cavity floor",
+      "access floor"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Check for raised floor: type, height, condition, load capacity.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-006",
+    "category": "office_specific",
+    "subcategory": "Abgehängte Decke",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Sind abgehängte Decken (Kühldecken, Akustikdecken) vorhanden?",
+    "question_en": "Are suspended ceilings (cooling, acoustic) installed?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "abgehängte Decke",
+      "Kühldecke",
+      "Akustikdecke"
+    ],
+    "search_keywords_en": [
+      "suspended ceiling",
+      "cooling ceiling",
+      "acoustic ceiling"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Describe suspended ceiling systems: type, condition, cooling function.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-007",
+    "category": "office_specific",
+    "subcategory": "Büromarkttechnik",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Entspricht die technische Ausstattung dem aktuellen Büromarktstandard?",
+    "question_en": "Does the technical fit-out meet current office market standards?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Marktstandard",
+      "Bürostandard",
+      "Ausstattungsqualität"
+    ],
+    "search_keywords_en": [
+      "market standard",
+      "office standard",
+      "fit-out quality"
+    ],
+    "priority": "high",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Benchmark technical fit-out against current Grade A office standards.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "OFF-008",
+    "category": "office_specific",
+    "subcategory": "Mieterstruktur",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Wie diversifiziert ist die Büro-Mieterstruktur nach Branchen?",
+    "question_en": "How diversified is the office tenant mix by sector?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Mieterstruktur",
+      "Branchenmix",
+      "Diversifikation"
+    ],
+    "search_keywords_en": [
+      "tenant mix",
+      "sector diversification"
+    ],
+    "priority": "high",
+    "source_hint": "Mieterliste",
+    "llm_instruction": "Analyze tenant diversification by sector. Flag single-tenant or single-sector concentration risk.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-009",
+    "category": "office_specific",
+    "subcategory": "Konferenzflächen",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Welche Konferenz- und Veranstaltungsflächen sind vorhanden?",
+    "question_en": "What conference and event facilities are available?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Konferenzraum",
+      "Veranstaltungsfläche",
+      "Kantine",
+      "Cafeteria"
+    ],
+    "search_keywords_en": [
+      "conference room",
+      "event space",
+      "canteen",
+      "cafeteria"
+    ],
+    "priority": "medium",
+    "source_hint": "Grundrisse",
+    "llm_instruction": "Describe conference, event, and catering facilities.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 4,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-010",
+    "category": "office_specific",
+    "subcategory": "Fahrradstellplätze",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Sind ausreichend Fahrradstellplätze und Duschmöglichkeiten vorhanden?",
+    "question_en": "Are sufficient bicycle parking and shower facilities available?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Fahrradstellplatz",
+      "Dusche",
+      "Umkleide",
+      "Fahrrad"
+    ],
+    "search_keywords_en": [
+      "bicycle parking",
+      "shower",
+      "changing room"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Count bicycle parking spaces and shower/changing facilities. Assess adequacy for current demand.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 4,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-011",
+    "category": "office_specific",
+    "subcategory": "Glasfaser",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Ist eine Glasfaseranbindung vorhanden?",
+    "question_en": "Is fibre optic connectivity available?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Glasfaser",
+      "Breitband",
+      "Internetanbindung",
+      "redundant"
+    ],
+    "search_keywords_en": [
+      "fibre optic",
+      "broadband",
+      "internet",
+      "redundant"
+    ],
+    "priority": "high",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Verify fibre optic availability, redundancy, and bandwidth capacity.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-012",
+    "category": "office_specific",
+    "subcategory": "Mietvertragstypologie",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Wie ist die Verteilung der Mietvertragstypen (Single-Tenant, Multi-Tenant)?",
+    "question_en": "What is the distribution of lease types (single-tenant, multi-tenant)?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Single-Tenant",
+      "Multi-Tenant",
+      "Vollvermietung"
+    ],
+    "search_keywords_en": [
+      "single-tenant",
+      "multi-tenant",
+      "full occupancy"
+    ],
+    "priority": "high",
+    "source_hint": "Mietverträge",
+    "llm_instruction": "Analyze single vs. multi-tenant structure and implications for re-letting risk.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-013",
+    "category": "office_specific",
+    "subcategory": "Raumteilung",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Ist eine flexible Raumteilung (Teilbarkeit der Etagen) möglich?",
+    "question_en": "Is flexible space subdivision (floor divisibility) possible?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Teilbarkeit",
+      "Raumteilung",
+      "flexible Grundrisse"
+    ],
+    "search_keywords_en": [
+      "divisibility",
+      "space subdivision",
+      "flexible layout"
+    ],
+    "priority": "high",
+    "source_hint": "Grundrisse, TDD-Bericht",
+    "llm_instruction": "Assess floor plate divisibility: minimum lettable unit, core location, sanitary provisions.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-014",
+    "category": "office_specific",
+    "subcategory": "Empfang/Lobby",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Wie ist der Eingangsbereich / die Lobby gestaltet?",
+    "question_en": "How is the entrance area / lobby designed?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Lobby",
+      "Empfang",
+      "Eingangsbereich",
+      "Repräsentativität"
+    ],
+    "search_keywords_en": [
+      "lobby",
+      "reception",
+      "entrance",
+      "representativeness"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht, Fotos",
+    "llm_instruction": "Assess lobby quality and representativeness. Note any planned upgrades.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 4,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-015",
+    "category": "office_specific",
+    "subcategory": "ÖPNV-Anbindung",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Wie ist die ÖPNV-Anbindung?",
+    "question_en": "What is the public transport connectivity?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "ÖPNV",
+      "S-Bahn",
+      "U-Bahn",
+      "Bus",
+      "Haltestelle"
+    ],
+    "search_keywords_en": [
+      "public transport",
+      "metro",
+      "bus",
+      "train station"
+    ],
+    "priority": "high",
+    "source_hint": "Standortanalyse",
+    "llm_instruction": "Describe public transport connections: distance to station, frequency, lines.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-016",
+    "category": "office_specific",
+    "subcategory": "Bürolage",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "In welcher Bürolage befindet sich das Objekt (CBD, City Rand, Peripherie)?",
+    "question_en": "What office location is the property in (CBD, city fringe, periphery)?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Bürolage",
+      "CBD",
+      "City",
+      "Peripherie",
+      "Teilmarkt"
+    ],
+    "search_keywords_en": [
+      "office location",
+      "CBD",
+      "city centre",
+      "periphery",
+      "submarket"
+    ],
+    "priority": "high",
+    "source_hint": "Standortanalyse",
+    "llm_instruction": "Classify the office location within the local market. Assess demand dynamics of the submarket.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-017",
+    "category": "office_specific",
+    "subcategory": "Büromarktdaten",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Wie sind die aktuellen Büromarktdaten (Leerstand, Spitzenmiete, Flächenumsatz)?",
+    "question_en": "What are current office market data (vacancy, prime rent, take-up)?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Büromarkt",
+      "Leerstand",
+      "Spitzenmiete",
+      "Flächenumsatz"
+    ],
+    "search_keywords_en": [
+      "office market",
+      "vacancy",
+      "prime rent",
+      "take-up"
+    ],
+    "priority": "high",
+    "source_hint": "Marktberichte",
+    "llm_instruction": "Extract local office market KPIs. Compare property performance with market.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-018",
+    "category": "office_specific",
+    "subcategory": "E-Mobilität",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Sind E-Ladestationen vorhanden oder geplant?",
+    "question_en": "Are EV charging stations available or planned?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "E-Ladestation",
+      "Elektromobilität",
+      "Wallbox"
+    ],
+    "search_keywords_en": [
+      "EV charging",
+      "electric vehicle",
+      "charging station"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Count existing EV charging points. Assess infrastructure for expansion.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": "GEIG",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-019",
+    "category": "office_specific",
+    "subcategory": "Ausbaustandard",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Welcher Ausbaustandard ist vorhanden (Shell & Core, Standard, Premium)?",
+    "question_en": "What fit-out standard exists (shell & core, standard, premium)?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Ausbaustandard",
+      "Shell and Core",
+      "Vollausbau",
+      "Premium"
+    ],
+    "search_keywords_en": [
+      "fit-out standard",
+      "shell and core",
+      "category A"
+    ],
+    "priority": "high",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Classify fit-out level. Note landlord vs. tenant works scope.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 6,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-020",
+    "category": "office_specific",
+    "subcategory": "Homeoffice-Auswirkung",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Wie wirkt sich Remote-Work/Homeoffice auf den Flächenbedarf aus?",
+    "question_en": "How does remote work affect space demand?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Homeoffice",
+      "Remote Work",
+      "Flächenbedarf",
+      "Belegungsquote"
+    ],
+    "search_keywords_en": [
+      "remote work",
+      "home office",
+      "space demand",
+      "occupancy"
+    ],
+    "priority": "high",
+    "source_hint": "Mieterumfrage, Marktberichte",
+    "llm_instruction": "Assess impact of remote work trends on future space demand and re-letting prospects.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "OFF-021",
+    "category": "office_specific",
+    "subcategory": "Stockwerkshöhe",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Welche lichten Höhen haben die Bürogeschosse?",
+    "question_en": "What are the clear heights of office floors?",
+    "expected_format": "numeric",
+    "search_keywords_de": [
+      "lichte Höhe",
+      "Deckenhöhe",
+      "Bürogeschoss"
+    ],
+    "search_keywords_en": [
+      "clear height",
+      "ceiling height",
+      "office floor"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Measure clear heights. Compare with market standard (min. 2.75m for Grade A).",
+    "validation_rule": "numeric_meters",
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-022",
+    "category": "office_specific",
+    "subcategory": "Parkmöglichkeiten",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Wie ist das Stellplatzverhältnis (Stellplätze pro qm Bürofläche)?",
+    "question_en": "What is the parking ratio (spaces per sqm office area)?",
+    "expected_format": "numeric",
+    "search_keywords_de": [
+      "Stellplatzverhältnis",
+      "Stellplatzschlüssel",
+      "Parking Ratio"
+    ],
+    "search_keywords_en": [
+      "parking ratio",
+      "parking rate"
+    ],
+    "priority": "high",
+    "source_hint": "Stellplatznachweis",
+    "llm_instruction": "Calculate parking ratio per sqm or per employee. Compare with market standard.",
+    "validation_rule": "numeric_ratio",
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-023",
+    "category": "office_specific",
+    "subcategory": "Nachhaltigkeit",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Entspricht das Bürogebäude den ESG-Anforderungen institutioneller Mieter?",
+    "question_en": "Does the office meet ESG requirements of institutional tenants?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "ESG",
+      "institutionell",
+      "Nachhaltigkeitsanforderung"
+    ],
+    "search_keywords_en": [
+      "ESG",
+      "institutional",
+      "sustainability requirement"
+    ],
+    "priority": "high",
+    "source_hint": "ESG-Prüfung",
+    "llm_instruction": "Assess alignment with typical institutional tenant ESG requirements.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "OFF-024",
+    "category": "office_specific",
+    "subcategory": "Serverraum",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Gibt es dedizierte Serverräume mit Kühlung und USV?",
+    "question_en": "Are there dedicated server rooms with cooling and UPS?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Serverraum",
+      "EDV-Raum",
+      "USV",
+      "Klimatisierung"
+    ],
+    "search_keywords_en": [
+      "server room",
+      "IT room",
+      "UPS",
+      "cooling"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Describe server/IT room provisions: cooling, UPS, fire suppression.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-025",
+    "category": "office_specific",
+    "subcategory": "Außenflächen",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Sind Terrassen, Balkone oder Dachgärten vorhanden?",
+    "question_en": "Are there terraces, balconies, or roof gardens?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Terrasse",
+      "Balkon",
+      "Dachgarten",
+      "Außenfläche"
+    ],
+    "search_keywords_en": [
+      "terrace",
+      "balcony",
+      "roof garden",
+      "outdoor area"
+    ],
+    "priority": "low",
+    "source_hint": "Grundrisse",
+    "llm_instruction": "Describe available outdoor amenity spaces.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 3,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-026",
+    "category": "office_specific",
+    "subcategory": "Nebenkosten Benchmark",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Wie hoch sind die Büro-Nebenkosten pro qm im Marktvergleich?",
+    "question_en": "How do office service charges per sqm compare to market?",
+    "expected_format": "numeric",
+    "search_keywords_de": [
+      "Nebenkosten pro qm",
+      "Büro-Betriebskosten",
+      "Benchmark"
+    ],
+    "search_keywords_en": [
+      "service charge per sqm",
+      "office operating costs"
+    ],
+    "priority": "high",
+    "source_hint": "NK-Abrechnungen",
+    "llm_instruction": "Benchmark office service charges per sqm against local market.",
+    "validation_rule": "numeric_eur_sqm",
+    "depends_on": [],
+    "severity_weight": 6,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "OFF-027",
+    "category": "office_specific",
+    "subcategory": "Modernisierungsbedarf",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Welcher Modernisierungsbedarf besteht, um den Büromarktstandard zu halten?",
+    "question_en": "What modernization is needed to maintain office market standard?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Modernisierung",
+      "Bürostandard",
+      "Repositionierung"
+    ],
+    "search_keywords_en": [
+      "modernization",
+      "office standard",
+      "repositioning"
+    ],
+    "priority": "high",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Identify necessary upgrades to maintain competitiveness in the local office market.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "OFF-028",
+    "category": "office_specific",
+    "subcategory": "Vermietungswettbewerb",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Welche Wettbewerbsobjekte bestehen im Teilmarkt?",
+    "question_en": "What competing properties exist in the submarket?",
+    "expected_format": "list",
+    "search_keywords_de": [
+      "Wettbewerb",
+      "Konkurrenzobjekt",
+      "Pipeline",
+      "Neubau"
+    ],
+    "search_keywords_en": [
+      "competition",
+      "competing property",
+      "pipeline",
+      "new build"
+    ],
+    "priority": "high",
+    "source_hint": "Marktberichte",
+    "llm_instruction": "Identify competing office properties and pipeline supply in the submarket.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-029",
+    "category": "office_specific",
+    "subcategory": "Bürokonzept",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Ist das Gebäude für New-Work-Konzepte geeignet?",
+    "question_en": "Is the building suitable for New Work concepts?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "New Work",
+      "Arbeitsplatzkonzept",
+      "agile Arbeitsweise"
+    ],
+    "search_keywords_en": [
+      "New Work",
+      "workplace concept",
+      "agile working"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Assess suitability for modern workplace concepts: open plan capability, collaboration zones, acoustics.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "OFF-030",
+    "category": "office_specific",
+    "subcategory": "Büroflächenangebot",
+    "asset_classes": [
+      "office"
+    ],
+    "question_de": "Wie ist das Verhältnis von Angebot und Nachfrage im lokalen Büromarkt?",
+    "question_en": "What is the supply-demand balance in the local office market?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Angebot",
+      "Nachfrage",
+      "Büromarkt",
+      "Absorption"
+    ],
+    "search_keywords_en": [
+      "supply",
+      "demand",
+      "office market",
+      "absorption"
+    ],
+    "priority": "high",
+    "source_hint": "Marktberichte",
+    "llm_instruction": "Analyze supply-demand dynamics: current stock, vacancy trend, pipeline, net absorption.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": true
+  }
+]

@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-brand: 37 99 235;
+    --color-landmark-dark: #1a2e40;
+    --color-landmark-accent: #7091a8;
+    --color-landmark-bg: #f7f7f7;
+    --sidebar-width: 280px;
+    --header-height: 63px;
+  }
+
+  * {
+    @apply border-slate-200 dark:border-slate-700;
+  }
+
+  body {
+    @apply bg-landmark-bg dark:bg-surface-dark;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 dark:bg-slate-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-400 dark:bg-slate-500;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2 text-sm font-light
+           text-white bg-landmark-accent rounded-full
+           hover:bg-landmark-dark
+           focus:outline-none focus:ring-2 focus:ring-landmark-accent focus:ring-offset-2
+           dark:focus:ring-offset-surface-dark
+           shadow-[0px_4px_2.8px_0px_rgba(0,0,0,0.02)]
+           transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2 text-sm font-medium
+           text-landmark-dark dark:text-slate-200 bg-white dark:bg-slate-800
+           border border-landmark-grey-light dark:border-slate-600 rounded-full
+           hover:bg-slate-50 dark:hover:bg-slate-700
+           focus:outline-none focus:ring-2 focus:ring-landmark-accent focus:ring-offset-2
+           dark:focus:ring-offset-surface-dark
+           shadow-[0px_4px_2.8px_0px_rgba(0,0,0,0.02)]
+           transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium
+           text-landmark-dark dark:text-slate-300 rounded-full
+           hover:bg-slate-100 dark:hover:bg-slate-800
+           focus:outline-none focus:ring-2 focus:ring-landmark-accent
+           transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium
+           text-white bg-red-600 rounded-full hover:bg-red-700
+           focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2
+           dark:focus:ring-offset-surface-dark
+           transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .card {
+    @apply bg-white dark:bg-slate-800
+           rounded-2xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.04)];
+  }
+
+  .input {
+    @apply block w-full px-4 py-2 text-sm bg-white dark:bg-slate-800
+           rounded-full
+           placeholder:text-[#a8a8a8] dark:placeholder:text-slate-500
+           focus:outline-none focus:ring-2 focus:ring-landmark-accent focus:border-landmark-accent
+           dark:focus:ring-landmark-accent
+           shadow-[0px_4px_2.8px_0px_rgba(0,0,0,0.02)]
+           transition-colors duration-150;
+  }
+
+  .input-textarea {
+    @apply block w-full px-4 py-3 text-sm bg-white dark:bg-slate-800
+           border border-landmark-grey-light dark:border-slate-600 rounded-3xl
+           placeholder:text-[#c5c5c5] dark:placeholder:text-slate-500
+           focus:outline-none focus:ring-2 focus:ring-landmark-accent focus:border-landmark-accent
+           dark:focus:ring-landmark-accent
+           shadow-[0px_6.8px_6.8px_0px_rgba(0,0,0,0.04)]
+           transition-colors duration-150 resize-y;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2 py-0.5 text-xs font-medium rounded-full;
+  }
+
+  .badge-green {
+    @apply badge bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400;
+  }
+
+  .badge-amber {
+    @apply badge bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400;
+  }
+
+  .badge-red {
+    @apply badge bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400;
+  }
+
+  .badge-gray {
+    @apply badge bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-400;
+  }
+
+  .sidebar-item {
+    @apply flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg
+           text-slate-600 dark:text-slate-400
+           hover:bg-slate-100 dark:hover:bg-slate-800
+           transition-colors duration-150 cursor-pointer;
+  }
+
+  .sidebar-item-active {
+    @apply sidebar-item bg-brand-50 dark:bg-brand-900/20
+           text-brand-700 dark:text-brand-400;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-stream {
+    animation: streamPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes streamPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+}

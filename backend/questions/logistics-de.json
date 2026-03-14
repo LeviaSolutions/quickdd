@@ -1,0 +1,775 @@
+[
+  {
+    "question_id": "LOG-001",
+    "category": "logistics_specific",
+    "subcategory": "Hallenfläche",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Wie groß ist die Logistik-/Hallenfläche und wie ist sie aufgeteilt?",
+    "question_en": "What is the logistics/warehouse area and how is it divided?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Hallenfläche",
+      "Lagerfläche",
+      "Logistikfläche",
+      "Aufteilung"
+    ],
+    "search_keywords_en": [
+      "warehouse area",
+      "logistics area",
+      "storage area"
+    ],
+    "priority": "critical",
+    "source_hint": "Flächenaufstellung",
+    "llm_instruction": "Break down by warehouse, mezzanine, office, social areas.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-002",
+    "category": "logistics_specific",
+    "subcategory": "Hallenhöhe",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Welche lichten Hallenhöhen (UKB) sind vorhanden?",
+    "question_en": "What clear warehouse heights (UKB) are available?",
+    "expected_format": "numeric",
+    "search_keywords_de": [
+      "Hallenhöhe",
+      "lichte Höhe",
+      "UKB",
+      "Unterkante Binder"
+    ],
+    "search_keywords_en": [
+      "clear height",
+      "UKB",
+      "warehouse height"
+    ],
+    "priority": "critical",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Measure clear heights (Unterkante Binder). Compare with market requirement (min. 10m for modern).",
+    "validation_rule": "numeric_meters",
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-003",
+    "category": "logistics_specific",
+    "subcategory": "Bodenbelastbarkeit",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Welche Bodenbelastbarkeit (kN/qm) haben die Hallenflächen?",
+    "question_en": "What floor load capacity (kN/sqm) do warehouse floors have?",
+    "expected_format": "numeric",
+    "search_keywords_de": [
+      "Bodenbelastbarkeit",
+      "Tragfähigkeit",
+      "kN/qm",
+      "Hallenboden"
+    ],
+    "search_keywords_en": [
+      "floor load",
+      "load capacity",
+      "kN/sqm"
+    ],
+    "priority": "critical",
+    "source_hint": "TDD-Bericht, Statik",
+    "llm_instruction": "Extract floor load capacity. Standard: 50 kN/sqm for logistics, higher for heavy storage.",
+    "validation_rule": "numeric_kn_sqm",
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-004",
+    "category": "logistics_specific",
+    "subcategory": "Rampen/Tore",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Wie viele Andockrampen und ebenerdige Tore sind vorhanden?",
+    "question_en": "How many dock levellers and ground-level doors exist?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Andockrampe",
+      "Verladetor",
+      "Überladebrücke",
+      "ebenerdiges Tor"
+    ],
+    "search_keywords_en": [
+      "dock leveller",
+      "loading door",
+      "ground level door"
+    ],
+    "priority": "critical",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Count dock levellers and ground-level doors. Calculate ratio per sqm warehouse. Standard: 1 per 1,000 sqm.",
+    "validation_rule": "numeric_count",
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-005",
+    "category": "logistics_specific",
+    "subcategory": "Rangierfläche",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Ist die Rangierfläche für LKW ausreichend (Hoftiefe)?",
+    "question_en": "Is the truck maneuvering area sufficient (yard depth)?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Rangierfläche",
+      "Hoftiefe",
+      "LKW",
+      "Wendebereich"
+    ],
+    "search_keywords_en": [
+      "maneuvering area",
+      "yard depth",
+      "truck",
+      "turning area"
+    ],
+    "priority": "critical",
+    "source_hint": "Lageplan, TDD-Bericht",
+    "llm_instruction": "Measure yard depth. Standard: min. 35m for standard trailer operations.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-006",
+    "category": "logistics_specific",
+    "subcategory": "Sprinkler",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Ist eine Sprinkleranlage vorhanden und entspricht sie den Anforderungen?",
+    "question_en": "Is a sprinkler system installed and does it meet requirements?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Sprinkler",
+      "Sprinkleranlage",
+      "ESFR",
+      "VdS",
+      "FM Global"
+    ],
+    "search_keywords_en": [
+      "sprinkler",
+      "sprinkler system",
+      "ESFR",
+      "FM Global"
+    ],
+    "priority": "critical",
+    "source_hint": "TDD-Bericht, Sprinklernachweis",
+    "llm_instruction": "Verify sprinkler type (ESFR preferred), coverage, water supply, FM Global/VdS compliance.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 10,
+    "regulatory_reference": "VdS, FM Global",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-007",
+    "category": "logistics_specific",
+    "subcategory": "Drittverwendungsfähigkeit",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Wie ist die Drittverwendungsfähigkeit der Logistikimmobilie?",
+    "question_en": "What is the third-party usability of the logistics property?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Drittverwendung",
+      "Flexibilität",
+      "Teilbarkeit",
+      "Multi-Tenant"
+    ],
+    "search_keywords_en": [
+      "third-party use",
+      "flexibility",
+      "divisibility"
+    ],
+    "priority": "high",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Assess flexibility: divisibility, multiple access points, independent utility meters.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": true
+  },
+  {
+    "question_id": "LOG-008",
+    "category": "logistics_specific",
+    "subcategory": "Autobahnanschluss",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Wie ist die Autobahnanbindung (Entfernung, Zufahrt)?",
+    "question_en": "What is the motorway connection (distance, access)?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Autobahn",
+      "Autobahnanbindung",
+      "Zufahrt",
+      "Verkehrsanbindung"
+    ],
+    "search_keywords_en": [
+      "motorway",
+      "highway connection",
+      "access"
+    ],
+    "priority": "critical",
+    "source_hint": "Standortanalyse",
+    "llm_instruction": "Measure distance to motorway junction. Describe access route quality.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 9,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-009",
+    "category": "logistics_specific",
+    "subcategory": "LKW-Stellplätze",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Sind ausreichend LKW- und PKW-Stellplätze vorhanden?",
+    "question_en": "Are sufficient truck and car parking spaces available?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "LKW-Stellplatz",
+      "PKW-Stellplatz",
+      "Parkfläche"
+    ],
+    "search_keywords_en": [
+      "truck parking",
+      "car parking"
+    ],
+    "priority": "high",
+    "source_hint": "Lageplan",
+    "llm_instruction": "Count truck and car parking spaces. Assess adequacy.",
+    "validation_rule": "numeric_count",
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-010",
+    "category": "logistics_specific",
+    "subcategory": "Grundstücksüberbauung",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Wie hoch ist die Grundstücksüberbauung (GRZ ist)?",
+    "question_en": "What is the site coverage ratio (actual GRZ)?",
+    "expected_format": "numeric",
+    "search_keywords_de": [
+      "Grundstücksüberbauung",
+      "GRZ",
+      "Überbauung"
+    ],
+    "search_keywords_en": [
+      "site coverage",
+      "GRZ",
+      "ground coverage"
+    ],
+    "priority": "medium",
+    "source_hint": "Flächenberechnung",
+    "llm_instruction": "Calculate actual site coverage. Compare with B-Plan GRZ.",
+    "validation_rule": "numeric_ratio",
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-011",
+    "category": "logistics_specific",
+    "subcategory": "Kühllogistik",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Sind Kühlflächen oder Tiefkühlflächen vorhanden?",
+    "question_en": "Are cold storage or deep freeze areas available?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Kühlfläche",
+      "Tiefkühllager",
+      "Kühllogistik",
+      "Temperaturzone"
+    ],
+    "search_keywords_en": [
+      "cold storage",
+      "deep freeze",
+      "temperature zone"
+    ],
+    "priority": "high",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Identify temperature-controlled areas: zones, temperature ranges, insulation, refrigeration capacity.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-012",
+    "category": "logistics_specific",
+    "subcategory": "Gefahrstofflager",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Gibt es Gefahrstofflager oder Gefahrgutbereiche?",
+    "question_en": "Are there hazardous goods storage areas?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Gefahrstofflager",
+      "Gefahrgut",
+      "TRGS",
+      "Brandabschnitt"
+    ],
+    "search_keywords_en": [
+      "hazardous goods",
+      "dangerous goods storage"
+    ],
+    "priority": "high",
+    "source_hint": "Baugenehmigung, Gefahrstoffkataster",
+    "llm_instruction": "Check for hazardous goods storage: approved quantities, compliance, fire compartments.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 8,
+    "regulatory_reference": "GefStoffV, TRGS",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-013",
+    "category": "logistics_specific",
+    "subcategory": "Cross-Docking",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Ist das Gebäude für Cross-Docking geeignet?",
+    "question_en": "Is the building suitable for cross-docking?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Cross-Docking",
+      "Durchladung",
+      "gegenüberliegende Tore"
+    ],
+    "search_keywords_en": [
+      "cross-docking",
+      "through-loading"
+    ],
+    "priority": "medium",
+    "source_hint": "Grundrisse",
+    "llm_instruction": "Assess cross-docking capability: opposing doors, clear layout.",
+    "validation_rule": null,
+    "depends_on": [
+      "LOG-004"
+    ],
+    "severity_weight": 6,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-014",
+    "category": "logistics_specific",
+    "subcategory": "Mezzanin",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Sind Mezzaninebenen vorhanden oder nachrüstbar?",
+    "question_en": "Are mezzanine levels installed or retrofittable?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Mezzanin",
+      "Zwischenebene",
+      "Galerie"
+    ],
+    "search_keywords_en": [
+      "mezzanine",
+      "intermediate level"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Check for existing or potential mezzanine levels. Assess structural capacity.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-015",
+    "category": "logistics_specific",
+    "subcategory": "Außenlagerfläche",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Sind Außenlagerflächen vorhanden und wie sind sie beschaffen?",
+    "question_en": "Are outdoor storage areas available?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Außenlager",
+      "Freifläche",
+      "Containerlager"
+    ],
+    "search_keywords_en": [
+      "outdoor storage",
+      "open storage",
+      "container yard"
+    ],
+    "priority": "medium",
+    "source_hint": "Lageplan",
+    "llm_instruction": "Describe outdoor storage: area, surface, permitted uses.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-016",
+    "category": "logistics_specific",
+    "subcategory": "Logistikmarkt",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Wie sind die aktuellen Logistikmarktdaten im Einzugsgebiet?",
+    "question_en": "What are current logistics market data in the catchment area?",
+    "expected_format": "structured",
+    "search_keywords_de": [
+      "Logistikmarkt",
+      "Leerstand",
+      "Spitzenmiete",
+      "Neubau"
+    ],
+    "search_keywords_en": [
+      "logistics market",
+      "vacancy",
+      "prime rent",
+      "new build"
+    ],
+    "priority": "high",
+    "source_hint": "Marktberichte",
+    "llm_instruction": "Extract local logistics market KPIs: vacancy, prime rent, pipeline.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": true,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-017",
+    "category": "logistics_specific",
+    "subcategory": "Energieversorgung",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Ist die Stromversorgung für Logistikbetrieb ausreichend?",
+    "question_en": "Is the power supply adequate for logistics operations?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Stromversorgung",
+      "Trafostation",
+      "Leistung",
+      "kVA"
+    ],
+    "search_keywords_en": [
+      "power supply",
+      "transformer",
+      "capacity",
+      "kVA"
+    ],
+    "priority": "high",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Verify power supply capacity for logistics operations including cold storage and EV charging.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-018",
+    "category": "logistics_specific",
+    "subcategory": "Entwässerung",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Ist die Hofentwässerung und Löschwasserrückhaltung ausreichend?",
+    "question_en": "Is yard drainage and fire water retention adequate?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Hofentwässerung",
+      "Löschwasserrückhaltung",
+      "Ölabscheider"
+    ],
+    "search_keywords_en": [
+      "yard drainage",
+      "fire water retention",
+      "oil separator"
+    ],
+    "priority": "high",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Check yard drainage, oil separators, and fire water retention (VAwS compliance).",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": "AwSV",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-019",
+    "category": "logistics_specific",
+    "subcategory": "Teilbarkeit",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Ist die Halle in mehrere Mieteinheiten teilbar?",
+    "question_en": "Can the warehouse be divided into multiple lease units?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Teilbarkeit",
+      "Multi-Tenant",
+      "Brandabschnitt"
+    ],
+    "search_keywords_en": [
+      "divisibility",
+      "multi-tenant",
+      "fire compartment"
+    ],
+    "priority": "high",
+    "source_hint": "Grundrisse, Brandschutzkonzept",
+    "llm_instruction": "Assess divisibility: fire compartments, separate access/utilities, minimum unit size.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 7,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-020",
+    "category": "logistics_specific",
+    "subcategory": "Nachhaltigkeit",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Sind Nachhaltigkeitsfeatures vorhanden (PV, LED, Dachbegrünung)?",
+    "question_en": "Are sustainability features present (PV, LED, green roof)?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "PV-Anlage",
+      "LED-Beleuchtung",
+      "Dachbegrünung",
+      "nachhaltig"
+    ],
+    "search_keywords_en": [
+      "PV system",
+      "LED lighting",
+      "green roof",
+      "sustainable"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Identify sustainability features relevant for ESG reporting and tenant attraction.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-021",
+    "category": "logistics_specific",
+    "subcategory": "Bauweise",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Welche Bauweise hat die Halle (Stahl, Beton, Sandwich)?",
+    "question_en": "What construction type is the warehouse (steel, concrete, sandwich)?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Stahlhalle",
+      "Betonfertigteil",
+      "Sandwichpaneel",
+      "Bauweise"
+    ],
+    "search_keywords_en": [
+      "steel frame",
+      "precast concrete",
+      "sandwich panel"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Describe construction type and its implications for flexibility and maintenance.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-022",
+    "category": "logistics_specific",
+    "subcategory": "Beleuchtung",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Welche Hallenbeleuchtung ist vorhanden?",
+    "question_en": "What warehouse lighting is installed?",
+    "expected_format": "free_text",
+    "search_keywords_de": [
+      "Hallenbeleuchtung",
+      "LED",
+      "Lichtstärke",
+      "Lux"
+    ],
+    "search_keywords_en": [
+      "warehouse lighting",
+      "LED",
+      "lux",
+      "light level"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Describe lighting: type (LED vs. conventional), lux levels, automated controls.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 4,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-023",
+    "category": "logistics_specific",
+    "subcategory": "Last Mile",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Ist das Objekt für Last-Mile-Logistik geeignet?",
+    "question_en": "Is the property suitable for last-mile logistics?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Last Mile",
+      "KEP",
+      "Citylogistik",
+      "Paketdienst"
+    ],
+    "search_keywords_en": [
+      "last mile",
+      "courier",
+      "city logistics"
+    ],
+    "priority": "medium",
+    "source_hint": "Standortanalyse",
+    "llm_instruction": "Assess last-mile suitability: urban location, access, operating hours, noise constraints.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-024",
+    "category": "logistics_specific",
+    "subcategory": "Automatisierung",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Ist das Gebäude für Automatisierung/Robotik vorbereitet?",
+    "question_en": "Is the building prepared for automation/robotics?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "Automatisierung",
+      "Robotik",
+      "Hochregallager",
+      "AutoStore"
+    ],
+    "search_keywords_en": [
+      "automation",
+      "robotics",
+      "high-bay",
+      "AutoStore"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Assess automation readiness: floor flatness, power, clear height, structural capacity.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": null,
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  },
+  {
+    "question_id": "LOG-025",
+    "category": "logistics_specific",
+    "subcategory": "E-LKW",
+    "asset_classes": [
+      "logistics"
+    ],
+    "question_de": "Ist E-LKW-Ladeinfrastruktur vorhanden oder nachrüstbar?",
+    "question_en": "Is EV truck charging infrastructure available or retrofittable?",
+    "expected_format": "yes_no_detail",
+    "search_keywords_de": [
+      "E-LKW",
+      "Ladeinfrastruktur",
+      "Elektro-LKW"
+    ],
+    "search_keywords_en": [
+      "EV truck",
+      "charging infrastructure",
+      "electric truck"
+    ],
+    "priority": "medium",
+    "source_hint": "TDD-Bericht",
+    "llm_instruction": "Assess E-LKW charging readiness: power capacity, cable routes, planned installations.",
+    "validation_rule": null,
+    "depends_on": [],
+    "severity_weight": 5,
+    "regulatory_reference": "GEIG",
+    "requires_table_qa": false,
+    "multi_hop_required": false
+  }
+]

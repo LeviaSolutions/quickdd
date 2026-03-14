@@ -1,0 +1,58 @@
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DDA_DATABASE_URL=postgresql://ddanalyst:${POSTGRES_PASSWORD:-ddanalyst}@postgres:5432/ddanalyst
+      - DDA_LLM_PROVIDER=openai
+      - DDA_OPENAI_BASE_URL=http://ollama:11434/v1
+      - DDA_OPENAI_API_KEY=ollama
+      - DDA_OPENAI_MODEL=llama4:scout
+      - DDA_JWT_SECRET_KEY=${JWT_SECRET_KEY:-change-me-in-production}
+      - DDA_DATA_DIR=/data
+      - DDA_HOST=0.0.0.0
+      - DDA_PORT=8000
+    volumes:
+      - backend-data:/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=ddanalyst
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-ddanalyst}
+      - POSTGRES_DB=ddanalyst
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ddanalyst"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+
+volumes:
+  backend-data:
+  postgres-data:
+  ollama-data:
